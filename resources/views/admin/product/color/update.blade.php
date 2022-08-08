@@ -1,21 +1,27 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Cập nhật cấu hình')
+@section('title', 'Cập nhật màu')
     <div class="card-body h-100">
         <div class="col-12 col-xl-16">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('product.config.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('product.color.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $obj->id }}">
                        <div class="mb-3">
-                            <label class="form-label">Thông tin cấu hình</label>
-                            <textarea name="config_product" class="form-control" rows="2" placeholder="Thông tin cấu hình" style="height: 64px;">{{$obj->config_product}}</textarea>
+                            <label class="form-label">Tên màu</label>
+                            <input type="text" name="name" class="form-control" value="{{ $obj->name }}"placeholder="Nhập vào tên màu">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Giá cấu hình</label>
-                            <input type="text" name="price_cf" value="{{$obj->price_cf}}" class="form-control" placeholder="Nhập vào giá cấu hình">
+                            <label class="form-label">Mã màu ( Nhập mã màu đúng như với tên màu)</label>
+                            <a target="_blank" class="sidebar-link" href="https://imagecolorpicker.com/vi">Liên kết lấy mã màu</a>
+                            <input type="text" name="color_code" value="{{ $obj->color_code }}" class="form-control" placeholder="Nhập vào mã màu">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Giá màu (Không có thì để = 0)</label>
+                            <input type="text" name="price_cl" value="{{ $obj->price_cl }} "class="form-control" placeholder="Nhập vào giá màu">
                         </div>
 
                         <div class="mb-3">
@@ -46,7 +52,7 @@
 
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a class="btn btn-primary" href="{{route('product.config', ['id' => $obj->pro_id])}}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{route('product.color', ['id' => $obj->pro_id])}}">Quay lại</a>
                     </form>
                     {{-- //Hiển thị thông báo thành công --}}
                     <br>

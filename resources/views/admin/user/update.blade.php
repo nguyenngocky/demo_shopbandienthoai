@@ -1,33 +1,61 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Cập nhật cấu hình')
+@section('title', 'Cập nhật người dùng')
     <div class="card-body h-100">
         <div class="col-12 col-xl-16">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('product.config.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('user.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $obj->id }}">
-                       <div class="mb-3">
-                            <label class="form-label">Thông tin cấu hình</label>
-                            <textarea name="config_product" class="form-control" rows="2" placeholder="Thông tin cấu hình" style="height: 64px;">{{$obj->config_product}}</textarea>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tên</label>
+                            <input type="text" name="name" value="{{$obj->name}}" class="form-control" placeholder="Nhập vào tên">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" value="{{$obj->email}}" class="form-control" placeholder="Nhập vào email">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Giá cấu hình</label>
-                            <input type="text" name="price_cf" value="{{$obj->price_cf}}" class="form-control" placeholder="Nhập vào giá cấu hình">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" name="password" class="form-control" placeholder="Nhập vào mật khẩu ">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Cấu hình thuộc sản phẩm</label>
-                            <select name="pro_id" class="form-select flex-grow-1">
-                                @foreach($Product as $pro)
-                                    @if($pro->id == $obj->pro_id)
-                                    <option selected value="{{$pro->id}}">{{$pro->name}}</option>
+                            <label class="form-label">Địa chỉ</label>
+                            <input type="text" name="address" value="{{$obj->address}}" class="form-control" placeholder="Nhập vào địa chỉ ">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label w-100">Ảnh ( nếu có )</label>
+                            <img id="image"
+                                src="{{ $obj->avatar?''.Storage::url($obj->avatar):'http://placehold.it/100x100' }}"
+                                alt="your image"
+                                style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-responsive"/>
+                                
+                            <input name="avatar" type="file" id="img">
+                            <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="number" name="phone" value="{{ $obj->phone }}" class="form-control" placeholder="Nhập vào SĐT ">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Vai trò</label>
+                            <select name="role_id" class="form-select flex-grow-1">
+                                    @foreach ($role as $rl)
+                                    @if($rl->id == $obj->role_id)
+                                      <option selected value="{{$obj->id}}"> {{$rl->name}}</option>
                                     @else
-                                    <option value="{{$pro->id}}">{{$pro->name}}</option>
+                                    <option value="{{$rl->id}}"> {{$rl->name}}</option>
                                     @endif
-                                @endforeach
+                                    @endforeach
                             </select>
                         </div>
 
@@ -46,7 +74,7 @@
 
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a class="btn btn-primary" href="{{route('product.config', ['id' => $obj->pro_id])}}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{route('user')}}">Quay lại</a>
                     </form>
                     {{-- //Hiển thị thông báo thành công --}}
                     <br>
@@ -94,4 +122,5 @@
             </div>
         </div>
     </div>
+@include('admin_layout.js_upload_file');
     @endsection

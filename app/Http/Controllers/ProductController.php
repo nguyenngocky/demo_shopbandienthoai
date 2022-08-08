@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\category;
+use App\Models\color;
+use App\Models\config;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -92,7 +94,9 @@ class ProductController extends Controller
 
     // xóa sản phẩm
     public function delete($id){
-
+        
+        config::where('pro_id', $id)->delete();
+        color::where('pro_id', $id)->delete();
         product::destroy($id);
         Session::flash('success', 'Xóa sản phẩm thành công!');
         return back();

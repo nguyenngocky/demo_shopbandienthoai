@@ -5,33 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class users extends Model
+class color extends Model
 {
     use HasFactory;
-    protected $table = "users";
-    protected $fillable = ['id', 'name', 'email', 'password', 'address', 'avatar', 'phone', 'role_id', 'status', 'created_at', 'updated_at'];
+    protected $table = 'color';
+    protected $fillable = ['id', 'name', 'color_code', 'price_cl', 'pro_id','status', 'created_at', 'updated_at'];
 
-
-    public function loadList($param = []){
+    // Lấy dữ liệu ra bảng
+    public function loadList($id,$param = []){
         $query = DB::table($this->table)
                ->select($this->fillable)
+               ->where('pro_id', '=', $id)
                ->orderBy('id', 'desc');
 
         $lists = $query->paginate(5);
         return $lists;
     }
 
-    //  // lưu tạo user
-     public function saveAddUser($params) {
+     // lưu tạo màu
+     public function saveAddColor($params) {
         $data = $params['cols'];
         $res = DB::table($this->table)->insert($data);
         return $res;
     }
 
-    // lấy dữ liệu ra bảng cập nhật user
+    // lấy dữ liệu ra bảng cập nhật màu sản phẩm
     public function loadOne($id, $params = null){
         $query = DB::table($this->table)
                ->where('id', '=', $id);
@@ -40,8 +40,8 @@ class users extends Model
         return $obj;
     }
 
-    // lưu cập nhật user
-    public function saveUpdateUser($params) {
+    // lưu cập nhật màu
+    public function saveUpdateColor($params) {
         if(empty($params['cols']['id'])) {
             Session::flash('error', 'Không xác định bản cập nhật');
             return null;
@@ -53,21 +53,9 @@ class users extends Model
                 $data[$colName] = (strlen($val) == 0) ? null : $val;
             }
         }
-        $data = array_merge($params['cols'], [
-            'password' => Hash::make($params['cols']['password']),
-        ]);
         $res = DB::table($this->table)
         ->where('id', '=', $params['cols']['id'])
         ->update($data);
-        return $res;
-    }
-
-    // đăng ký
-    public function saveNew($params) {
-        $data = array_merge($params['cols'], [
-            'password' => Hash::make($params['cols']['password']),
-        ]);
-        $res = DB::table($this->table)->insertGetId($data);
         return $res;
     }
 }

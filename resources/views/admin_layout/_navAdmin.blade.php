@@ -56,11 +56,12 @@
 
 					<li class="sidebar-item">
 						<a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Danh sách</span>
+							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Quản lý</span>
 						</a>
 						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('category')}}">Danh mục</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('product')}}">Sản phẩm</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{route('user')}}">Người dùng</a></li>
 						</ul>
 					</li>
 

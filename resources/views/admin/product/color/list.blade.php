@@ -1,6 +1,6 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Danh sách sản phẩm')
+@section('title', 'Danh sách màu sản phẩm')
 
     <main class="content">
         <div class="container-fluid p-0">
@@ -8,7 +8,7 @@
             <div class="mb-3">
                 <h1 class="h3 d-inline align-middle"></h1>
             </div>
-
+            <a class="btn btn-primary" href="{{route('product')}}">Quay lại</a>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -59,12 +59,10 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên Sản phẩm</th>
-                                        <th>Ảnh</th>
-                                        <th>Giá</th>
-                                        <th>Giảm giá</th>
-                                        <th>Mô tả ngắn</th>
-                                        <th>Sản phẩm thuộc danh mục</th>
+                                        <th>Tên màu</th>
+                                        <th>Mã màu ( Nhập mã màu đúng như với tên màu)</th>
+                                        <th>Giá màu (Không có thì để = 0)</th>
+                                        <th>Màu thuộc sản phẩm</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
                                         <th>Ngày cập nhật</th>
@@ -76,49 +74,39 @@
                                             <!-- Create -->
                                             <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
-                                                    <form action="{{route('addProduct')}}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{route('product.color.add', ['id' => $getNamePro->id])}}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">Thêm sản phẩm</h5>
+                                                                <h5 class="modal-title">Thêm màu</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Tên sản phẩm</label>
-                                                                    <input type="text" name="name" class="form-control" placeholder="Nhập vào tên sản phẩm">
+                                                                    <label class="form-label">Mã màu</label>
+                                                                    <input type="text" name="name" class="form-control" placeholder="Nhập vào tên màu">
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label w-100">Ảnh</label>
-                                                                    <img id="image" src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg" alt="your image"
-                                                                        style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-fluid"/>
-                                                                    <input name="image" type="file" id="img">
-                                                                    <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
-                                                                </div>
-
-
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Giá</label>
-                                                                    <input type="number" name="price" class="form-control" placeholder="Nhập vào giá sản phẩm">
+                                                                    <label class="form-label">Mã màu ( Nhập mã màu đúng như với tên màu)</label>
+                                                                    <a target="_blank" class="sidebar-link" href="https://imagecolorpicker.com/vi">Liên kết lấy mã màu</a>
+                                                                    <input type="text" name="color_code" class="form-control" placeholder="Nhập vào mã màu">
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Giảm giá</label>
-                                                                    <input type="number" name="discount" class="form-control" placeholder="Nhập vào giảm giá ">
+                                                                    <label class="form-label">Giá màu (Không có thì để = 0)</label>
+                                                                    <input type="number" name="price_cl" class="form-control" placeholder="Nhập vào giá màu">
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Mô tả ngắn</label>
-                                                                    <textarea name="desc" class="form-control" rows="2" placeholder="Mô tả ngắn sản phẩm" style="height: 64px;"></textarea>
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Sản phẩm thuộc danh mục</label>
-                                                                    <select name="cate_id" class="form-select flex-grow-1">
-                                                                        @foreach($category as $cate)
-                                                                            <option value="{{$cate->id}}">{{$cate->name}}</option>
-                                                                           
+                                                                    <label class="form-label">Màu thuộc sản phẩm</label>
+                                                                    <select name="pro_id" class="form-select flex-grow-1">
+                                                                        @foreach($Product as $pro)
+                                                                            @if($pro->id == $getNamePro->id)
+                                                                            <option selected value="{{$pro->id}}">{{$pro->name}}</option>
+                                                                            @else
+                                                                            <option value="{{$pro->id}}">{{$pro->name}}</option>
+                                                                            @endif
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -146,43 +134,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($listPro as $pro)
+                                @foreach ($listColor as $color)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$pro->name}}</td>
-                                        <td class="text-center"><img width="100px" src="{{asset('storage/'. $pro->image)}}" alt=""></td>
-                                        <td>{{ $pro->price}}</td>
-                                        <td>{{ $pro->discount}}</td>
-                                        <td style="max-width: 200px;">{{ $pro->desc}}</td>
-
-                                            @foreach ($category as $cate)
-                                               @if($pro->cate_id == $cate->id)
-                                               <td>{{$cate->name}}</td>
-                                               @endif
-                                            @endforeach
-
+                                        <td>{{$color->name}}</td>
+                                        <td><div style="width: 50px; height: 50px; background: {{$color->color_code}}"></div>{{$color->color_code}}</td>
+                                        <td>{{$color->price_cl}}</td>
+                                        <td>{{$getNamePro->name}}</td>
                                         <td>
-                                                @if($pro->status == 1)
-                                                <a href="{{route('ActiveStatusPro', ['id' => $pro->id])}}" class="btn btn-success">Hoạt động</a>
+                                                @if($color->status == 1)
+                                                <a href="{{route('ActiveStatusColor', ['id' => $color->id])}}" class="btn btn-success">Hoạt động</a>
                                                 @endif
-                                                @if($pro->status == 0)
-                                                <a href="{{route('UnactiveStatusPro', ['id' => $pro->id])}}" class="btn btn-danger">Không hoạt động</a>
+                                                @if($color->status == 0)
+                                                <a href="{{route('UnactiveStatusColor', ['id' => $color->id])}}" class="btn btn-danger">Không hoạt động</a>
                                              @endif                                          
                                         </td>
-                                        <td>{{$pro->created_at}}</td>
-                                        <td>{{$pro->updated_at}}</td>
+                                        <td>{{$color->created_at}}</td>
+                                        <td>{{$color->updated_at}}</td>
                                         <td>
-                                            <a href="{{route('product.update', ['id' => $pro->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                                            <a onclick="return Del()" href="{{route('deleteProduct', ['id' => $pro->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
-                                            <a href="{{route('product.config', ['id' => $pro->id])}}">Cấu hình</a> /
-                                            <a href="{{route('product.color', ['id' => $pro->id])}}">Màu sắc</a>
+                                            <a href="{{route('product.color.update', ['id' => $color->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                            <a  href="{{route('deleteColor', ['id' => $color->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                                         </td>
                                     </tr>
                                  @endforeach
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                {{$listPro->links()}} 
+                                {{$listColor->links()}} 
                             </div>
                         </div>
                     </div>
@@ -200,11 +178,5 @@
 			});
 		});
 	</script>
-    <script>
-        function Del(name){
-            return confirm("Bạn có muốn xóa? Xóa sản phẩm sẽ xóa cả cấu hình lẫn màu sắc của sản phẩm đó !");
-        }
-    </script>
-    @include('admin_layout.js_upload_file')
 
 @endsection

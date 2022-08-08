@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\category;
+use App\Models\color;
+use App\Models\config;
+use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +93,10 @@ class CategoryController extends Controller
     // xóa danh mục
     public function delete($id){
 
+        $pro = product::where('cate_id', $id)->first();
+        config::where('pro_id', $pro->id)->delete();
+        color::where('pro_id', $pro->id)->delete();
+        $pro->delete();
         category::destroy($id);
         Session::flash('success', 'Xóa danh mục thành công!');
         return back();

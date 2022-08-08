@@ -26,7 +26,8 @@ Route::post('/sign-in', ['as'=>'sign-in','uses'=> 'AuthController@postLogin']);
 Route::get('/logout', ['as'=>'logout','uses'=> 'AuthController@getLogOut']);
 
 Route::middleware(['auth'])->group(function (){
-    Route::get('/', 'HomeAdminController@index')->name('home-dashboard');
+    //admin
+    // Route::get('/', 'HomeAdminController@index')->name('home-dashboard');
     Route::get('/home-dashboard', 'HomeAdminController@index')->name('home-dashboard');
     // danh mục
     Route::get('/category', 'CategoryController@getList')->name('category');
@@ -52,4 +53,25 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/deleteConfig/{id}', 'ConfigController@delete')->name('deleteConfig');
     Route::get('/product-config/update/{id}', 'ConfigController@getListUpdate')->name('product.config.update');
     Route::post('/product-config/update/{id}', 'ConfigController@Update')->name('product.config.update.post');
+    // Màu sắc sản phẩm
+    Route::get('/product-color/{id}', 'ColorController@getList')->name('product.color');
+    Route::post('/product-color/{id}', 'ColorController@addConfig')->name('product.color.add');
+    Route::get('/ActiveStatusColor/{id}', 'ColorController@ActiveStatusColor')->name('ActiveStatusColor');
+    Route::get('/UnactiveStatusColor/{id}', 'ColorController@UnactiveStatusColor')->name('UnactiveStatusColor');
+    Route::get('/deleteColor/{id}', 'ColorController@delete')->name('deleteColor');
+    Route::get('/product-color/update/{id}', 'ColorController@getListUpdate')->name('product.color.update');
+    Route::post('/product-color/update/{id}', 'ColorController@Update')->name('product.color.update.post');
+    
+    // Quản trị người dùng
+    Route::get('/user', 'UserController@getList')->name('user');
+    Route::post('/user', 'UserController@addUser')->name('addUser');
+    Route::get('/deleteUser/{id}', 'UserController@delete')->name('deleteUser');
+    Route::get('/user/update/{id}', 'UserController@getListUpdate')->name('user.update');
+    Route::post('/user/update/{id}', 'UserController@Update')->name('user.update.post');
+    Route::get('/ActiveStatusUser/{id}', 'UserController@ActiveStatusUser')->name('ActiveStatusUser');
+    Route::get('/UnactiveStatusUser/{id}', 'UserController@UnactiveStatusUser')->name('UnactiveStatusUser');
+
 });
+
+// client
+Route::get('/', 'UserController@getList')->name('user');

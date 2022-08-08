@@ -1,6 +1,6 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Danh sách sản phẩm')
+@section('title', 'Danh sách cấu hình sản phẩm')
 
     <main class="content">
         <div class="container-fluid p-0">
@@ -89,7 +89,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Giá cấu hình</label>
-                                                                    <input type="number" name="price_cf" class="form-control" placeholder="Nhập vào giá sản phẩm">
+                                                                    <input type="number" name="price_cf" class="form-control" placeholder="Nhập vào giá cấu hình">
                                                                 </div>
 
                                                                 <div class="mb-3">
