@@ -74,4 +74,4 @@ Route::middleware(['auth'])->group(function (){
 });
 
 // client
-Route::get('/', 'UserController@getList')->name('user');
+Route::get('/', 'client\HomeClientController@index')->name('homeClient');

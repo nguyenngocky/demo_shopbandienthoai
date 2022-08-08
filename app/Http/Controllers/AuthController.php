@@ -55,7 +55,7 @@ class AuthController extends Controller
                 if(Auth::user()->role_id == 1) {
                     return Redirect::to('home-dashboard');
                 }else {
-                    return "Trang người dùng";
+                    return Redirect::to('homeClient');
                 }
             }else{
                 Session::flash('error','Email hoặc mật khẩu không đúng');
