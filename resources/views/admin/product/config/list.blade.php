@@ -1,6 +1,6 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Danh sách danh mục')
+@section('title', 'Danh sách sản phẩm')
 
     <main class="content">
         <div class="container-fluid p-0">
@@ -8,7 +8,7 @@
             <div class="mb-3">
                 <h1 class="h3 d-inline align-middle"></h1>
             </div>
-
+            <a class="btn btn-primary" href="{{route('product')}}">Quay lại</a>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -59,8 +59,9 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên Danh mục</th>
-                                        <th>Ảnh</th>
+                                        <th>Thông tin cấu hình</th>
+                                        <th>Giá cấu hình</th>
+                                        <th>Cấu hình thuộc sản phẩm</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
                                         <th>Ngày cập nhật</th>
@@ -72,25 +73,36 @@
                                             <!-- Create -->
                                             <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
-                                                    <form action="{{route('addCategory')}}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{route('product.config.add', ['id' => $getNamePro->id])}}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">Thêm Danh mục</h5>
+                                                                <h5 class="modal-title">Thêm cấu hình</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Tên danh mục</label>
-                                                                    <input type="text" name="name" class="form-control" placeholder="Nhập vào tên danh mục">
+                                                                    <label class="form-label">Thông tin cấu hình</label>
+                                                                    <textarea name="config_product" class="form-control" rows="2" placeholder="Thông tin cấu hình" style="height: 64px;"></textarea>
+                                                                </div>
+
+
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Giá cấu hình</label>
+                                                                    <input type="number" name="price_cf" class="form-control" placeholder="Nhập vào giá sản phẩm">
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label w-100">Ảnh ( nếu có )</label>
-                                                                    <img id="image" src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg" alt="your image"
-                                                                        style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-fluid"/>
-                                                                    <input name="image" type="file" id="img">
-                                                                    <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
+                                                                    <label class="form-label">Cấu hình thuộc sản phẩm</label>
+                                                                    <select name="pro_id" class="form-select flex-grow-1">
+                                                                        @foreach($Product as $pro)
+                                                                            @if($pro->id == $getNamePro->id)
+                                                                            <option selected value="{{$pro->id}}">{{$pro->name}}</option>
+                                                                            @else
+                                                                            <option value="{{$pro->id}}">{{$pro->name}}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
 
                                                                 <div class="mb-3">
@@ -116,32 +128,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($listCate as $cate)
+                                @foreach ($listConfig as $conf)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$cate->name}}</td>
-                                        <td class="text-center"><img width="100px" src="{{asset('storage/'. $cate->image)}}" alt=""></td>
+                                        <td style="max-width: 500px">{{$conf->config_product}}</td>
+                                        <td>{{ $conf->price_cf}}</td>
+                                        <td>{{$getNamePro->name}}</td>
                                         <td>
-                                                @if($cate->status == 1)
-                                                <a href="{{route('UnactiveStatus', ['id' => $cate->id])}}" class="btn btn-success">Hoạt động</a>
+                                                @if($conf->status == 1)
+                                                <a href="{{route('ActiveStatusConfig', ['id' => $conf->id])}}" class="btn btn-success">Hoạt động</a>
                                                 @endif
-                                                @if($cate->status == 0)
-                                                <a href="{{route('ActiveStatus', ['id' => $cate->id])}}" class="btn btn-danger">Không hoạt động</a>
+                                                @if($conf->status == 0)
+                                                <a href="{{route('UnactiveStatusConfig', ['id' => $conf->id])}}" class="btn btn-danger">Không hoạt động</a>
                                              @endif                                          
                                         </td>
-                                        <td>{{$cate->created_at}}</td>
-                                        <td>{{$cate->updated_at}}</td>
+                                        <td>{{$conf->created_at}}</td>
+                                        <td>{{$conf->updated_at}}</td>
                                         <td>
-                                            <a href="{{route('category.update', ['id' => $cate->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                                            <a  href="{{route('deleteCategory', ['id' => $cate->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
-                                            <a href="{{route('product')}}">Sản phẩm</a>
+                                            <a href="{{route('product.config.update', ['id' => $conf->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                            <a  href="{{route('deleteConfig', ['id' => $conf->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                                         </td>
                                     </tr>
                                  @endforeach
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                {{$listCate->links()}} 
+                                {{$listConfig->links()}} 
                             </div>
                         </div>
                     </div>
@@ -159,6 +171,5 @@
 			});
 		});
 	</script>
-    @include('admin_layout.js_upload_file')
 
 @endsection

@@ -52,7 +52,11 @@ class AuthController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
             if(Auth::attempt(['email' => $email, 'password' => $password])){
-                return Redirect::to('home-dashboard');
+                if(Auth::user()->role_id == 1) {
+                    return Redirect::to('home-dashboard');
+                }else {
+                    return "Trang người dùng";
+                }
             }else{
                 Session::flash('error','Email hoặc mật khẩu không đúng');
                 return Redirect::to('sign-in');

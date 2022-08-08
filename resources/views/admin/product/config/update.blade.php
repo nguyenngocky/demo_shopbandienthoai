@@ -1,27 +1,34 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Cập nhật danh mục')
+@section('title', 'Cập nhật sản phẩm')
     <div class="card-body h-100">
         <div class="col-12 col-xl-16">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('category.update.post', ['id' => request()->route('id')])}}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('product.config.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $obj->id }}">
                        <div class="mb-3">
-                            <label class="form-label">Tên danh mục</label>
-                            <input type="text" name="name" value="{{$obj->name}}" class="form-control" placeholder="Nhập vào tên danh mục">
+                            <label class="form-label">Thông tin cấu hình</label>
+                            <textarea name="config_product" class="form-control" rows="2" placeholder="Thông tin cấu hình" style="height: 64px;">{{$obj->config_product}}</textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label w-100">Ảnh ( nếu có )</label>
-                            <img id="image"
-                                src="{{ $obj->image?''.Storage::url($obj->image):'http://placehold.it/100x100' }}"
-                                alt="your image"
-                                style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-responsive"/>
-                                
-                            <input name="image" type="file" id="img">
-                            <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
+                            <label class="form-label">Giá cấu hình</label>
+                            <input type="text" name="price_cf" value="{{$obj->price_cf}}" class="form-control" placeholder="Nhập vào giá cấu hình">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cấu hình thuộc sản phẩm</label>
+                            <select name="pro_id" class="form-select flex-grow-1">
+                                @foreach($Product as $pro)
+                                    @if($pro->id == $obj->pro_id)
+                                    <option selected value="{{$pro->id}}">{{$pro->name}}</option>
+                                    @else
+                                    <option value="{{$pro->id}}">{{$pro->name}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
@@ -39,7 +46,7 @@
 
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a class="btn btn-primary" href="{{route('category')}}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{route('product')}}">Quay lại</a>
                     </form>
                     {{-- //Hiển thị thông báo thành công --}}
                     <br>
@@ -87,7 +94,4 @@
             </div>
         </div>
     </div>
-
-    @include('admin_layout.js_upload_file');
-
     @endsection

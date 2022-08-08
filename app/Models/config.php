@@ -7,39 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class category extends Model
+class config extends Model
 {
     use HasFactory;
-    protected $table = 'category';
-    protected $fillable = ['id', 'name', 'image', 'status', 'created_at', 'updated_at'];
+    protected $table = 'config';
+    protected $fillable = ['id', 'config_product', 'price_cf', 'pro_id','status', 'created_at', 'updated_at'];
 
     // Lấy dữ liệu ra bảng
-    public function loadList($param = []){
+    public function loadList($id,$param = []){
         $query = DB::table($this->table)
                ->select($this->fillable)
+               ->where('pro_id', '=', $id)
                ->orderBy('id', 'desc');
 
         $lists = $query->paginate(5);
         return $lists;
     }
 
-    // lấy tất cả danh mục sang sản phẩm
-    public function getListPro($param = []){
-        $query = DB::table($this->table)
-               ->select($this->fillable)
-               ->orderBy('id', 'desc');
-
-        $lists = $query->get();
-        return $lists;
-    }
-    // lưu tạo danh mục
-    public function saveAddCate($params) {
+     // lưu tạo cấu hình
+     public function saveAddConfig($params) {
         $data = $params['cols'];
         $res = DB::table($this->table)->insert($data);
         return $res;
     }
 
-    // lấy dữ liệu ra bảng cập nhật danh mục
+    // lấy dữ liệu ra bảng cập nhật cấu hình sản phẩm
     public function loadOne($id, $params = null){
         $query = DB::table($this->table)
                ->where('id', '=', $id);
@@ -48,8 +40,8 @@ class category extends Model
         return $obj;
     }
 
-    // lưu cập nhật danh mục
-    public function saveUpdateCate($params) {
+    // lưu cập nhật sản phẩm
+    public function saveUpdateConfig($params) {
         if(empty($params['cols']['id'])) {
             Session::flash('error', 'Không xác định bản cập nhật');
             return null;
@@ -66,5 +58,4 @@ class category extends Model
         ->update($data);
         return $res;
     }
-
 }

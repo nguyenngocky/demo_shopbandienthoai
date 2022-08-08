@@ -59,7 +59,8 @@
 							<i class="align-middle" data-feather="layout"></i> <span class="align-middle">Danh sách</span>
 						</a>
 						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-							<li class="sidebar-item"><a class="sidebar-link" href="{{route('category')}}">Danh mục</a></li>>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{route('category')}}">Danh mục</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{route('product')}}">Sản phẩm</a></li>
 						</ul>
 					</li>
 

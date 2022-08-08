@@ -1,15 +1,15 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Cập nhật danh mục')
+@section('title', 'Cập nhật sản phẩm')
     <div class="card-body h-100">
         <div class="col-12 col-xl-16">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('category.update.post', ['id' => request()->route('id')])}}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('product.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $obj->id }}">
                        <div class="mb-3">
-                            <label class="form-label">Tên danh mục</label>
+                            <label class="form-label">Tên sản phẩm</label>
                             <input type="text" name="name" value="{{$obj->name}}" class="form-control" placeholder="Nhập vào tên danh mục">
                         </div>
 
@@ -22,6 +22,21 @@
                                 
                             <input name="image" type="file" id="img">
                             <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Giá sản phẩm</label>
+                            <input type="text" name="price" value="{{$obj->price}}" class="form-control" placeholder="Nhập vào giá">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Giảm giá sản phẩm</label>
+                            <input type="text" name="discount" value="{{$obj->discount}}" class="form-control" placeholder="Nhập vào giá">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả ngắn</label>
+                            <textarea name="desc" class="form-control" rows="2" placeholder="Mô tả ngắn sản phẩm" style="height: 64px;">{{$obj->desc}}</textarea>
                         </div>
 
                         <div class="mb-3">
@@ -39,7 +54,7 @@
 
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a class="btn btn-primary" href="{{route('category')}}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{route('product')}}">Quay lại</a>
                     </form>
                     {{-- //Hiển thị thông báo thành công --}}
                     <br>
@@ -87,7 +102,5 @@
             </div>
         </div>
     </div>
-
-    @include('admin_layout.js_upload_file');
-
+@include('admin_layout.js_upload_file');
     @endsection

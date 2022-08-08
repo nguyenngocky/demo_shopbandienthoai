@@ -1,5 +1,10 @@
 @php
    $objUser = \Illuminate\Support\Facades\Auth::user();
+   if(Auth::user()->role_id != 1){
+		echo "Bạn không có quyền truy cập vào chức năng này";
+		return false;
+	}
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
