@@ -145,7 +145,7 @@
                             @endif
                             @endforeach
                            
-                            <h5 class="title"><a href="single-product.html">Modern Smart Phone
+                            <h5 class="title"><a href="single-product.html">{{$lc->name}}
                                 </a>
                             </h5>
                             <span class="price">

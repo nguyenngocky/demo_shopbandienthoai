@@ -1,3 +1,9 @@
+@php
+
+$objUserClient = \Illuminate\Support\Facades\Auth::user();
+
+
+@endphp
 <!DOCTYPE html>
 <html lang="zxx" dir="ltr">
 
@@ -41,9 +47,21 @@
                         <div class="col d-none d-lg-block">
                             <div class="top-nav">
                                 <ul>
-                                    <li><a href="tel:0123456789"><i class="fa fa-phone"></i> +84 335 778</a></li>
-                                    <li><a href="mailto:demo@example.com"><i class="fa fa-envelope-o"></i> hmart@gmaik.com</a></li>
+                                    <li><a href="tel:0123456789"><i class="fa fa-phone"></i> @php 
+                                                                                             if(isset($objUserClient))
+                                                                                             {
+                                                                                                echo $objUserClient->phone;
+                                                                                             } 
+                                                                                             else{ 
+                                                                                                echo '';
+                                                                                             } 
+                                                                                             @endphp </a></li>
+                                    <li><a href="mailto:demo@example.com"><i class="fa fa-envelope-o"></i> @php if(isset($objUserClient)){ echo $objUserClient->email;} else{ echo '';} @endphp </a></li>
+                                    @if(!isset($objUserClient))
                                     <li><a href="{{route('sign-in')}}"><i class="fa fa-user"></i> Đăng nhập</a></li>
+                                    @else
+                                    <li><a href="{{route('logout')}}"><i class="fa fa-user"></i> Đăng xuất</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
