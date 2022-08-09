@@ -71,7 +71,18 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/ActiveStatusUser/{id}', 'UserController@ActiveStatusUser')->name('ActiveStatusUser');
     Route::get('/UnactiveStatusUser/{id}', 'UserController@UnactiveStatusUser')->name('UnactiveStatusUser');
 
+    // Quản trị banner
+    Route::get('/banner', 'BannerController@getList')->name('banner');
+    Route::post('/banner', 'BannerController@addBanner')->name('addBanner');
+    Route::get('/deleteBanner/{id}', 'BannerController@delete')->name('deleteBanner');
+    // Route::get('/banner/update/{id}', 'BannerController@getListUpdate')->name('banner.update');
+    // Route::post('/banner/update/{id}', 'BannerController@Update')->name('banner.update.post');
+    Route::get('/ActiveStatusBanner/{id}', 'BannerController@ActiveStatusBanner')->name('ActiveStatusBanner');
+    Route::get('/UnactiveStatusBanner/{id}', 'BannerController@UnactiveStatusBanner')->name('UnactiveStatusBanner');
+
 });
 
 // client
-Route::get('/', 'client\HomeClientController@index')->name('homeClient');
+Route::get('/', 'client\HomeClientController@home')->name('homePageClient');
+Route::get('/category/{id}', 'client\HomeClientController@proAsCategory')->name('homePageCate');
+Route::get('/product-detail/{id}', 'client\HomeClientController@proDetail')->name('proDetailPage');

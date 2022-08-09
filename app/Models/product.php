@@ -56,4 +56,40 @@ class product extends Model
         ->update($data);
         return $res;
     }
+    
+    // client
+
+    // lấy sản phẩm ra trang chủ
+    public function getListHome() {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->orderBy('id', 'desc');
+
+        $lists = $query->get();
+        return $lists;
+    }
+
+    // lấy sản phẩm theo id danh mục
+    public function getListProAsCate($id) {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->where('cate_id', '=', $id)
+               ->orderBy('id', 'desc');
+
+        $lists = $query->paginate(12);
+        return $lists;
+    }
+
+    // lấy ra chi tiết sản phẩm theo id
+    public function getProDetail($id) {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->where('id', '=', $id);
+
+        $lists = $query->first();
+        return $lists;
+    }
 }

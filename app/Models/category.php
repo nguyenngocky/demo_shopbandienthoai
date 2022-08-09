@@ -67,4 +67,17 @@ class category extends Model
         return $res;
     }
 
+    // client
+
+    // lấy ra danh sách ở thanh menu
+    public function loadListClient($param = []){
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->orderBy('id', 'desc');
+
+        $lists = $query->get();
+        return $lists;
+    }
+
 }

@@ -7,31 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class config extends Model
+class banner extends Model
 {
     use HasFactory;
-    protected $table = 'config';
-    protected $fillable = ['id', 'config_product', 'price_cf', 'pro_id','status', 'created_at', 'updated_at'];
+    protected $table = 'banner';
+    protected $fillable = ['id', 'title', 'desc', 'image', 'status', 'created_at', 'updated_at'];
 
-    // Lấy dữ liệu ra bảng
-    public function loadList($id,$param = []){
+    public function loadList($param = []){
         $query = DB::table($this->table)
                ->select($this->fillable)
-               ->where('pro_id', '=', $id)
                ->orderBy('id', 'desc');
 
         $lists = $query->paginate(5);
         return $lists;
     }
 
-     // lưu tạo cấu hình
-     public function saveAddConfig($params) {
+    //  // lưu tạo sản phẩm
+     public function saveAddBanner($params) {
         $data = $params['cols'];
         $res = DB::table($this->table)->insert($data);
         return $res;
     }
 
-    // lấy dữ liệu ra bảng cập nhật cấu hình sản phẩm
+    // lấy dữ liệu ra bảng cập nhật sản phẩm
     public function loadOne($id, $params = null){
         $query = DB::table($this->table)
                ->where('id', '=', $id);
@@ -41,7 +39,7 @@ class config extends Model
     }
 
     // lưu cập nhật sản phẩm
-    public function saveUpdateConfig($params) {
+    public function saveUpdateBanner($params) {
         if(empty($params['cols']['id'])) {
             Session::flash('error', 'Không xác định bản cập nhật');
             return null;
@@ -61,12 +59,11 @@ class config extends Model
 
     // client
 
-    // lấy dữ liệu ra chi tiết sản phẩm theo id sản phẩm
-    public function getConfig($id) {
+    public function loadListBannerHome() {
         $query = DB::table($this->table)
                ->select($this->fillable)
-               ->where('status', '=', '1')
-               ->where('pro_id', '=', $id);
+               ->where('status', '1')
+               ->orderBy('id', 'desc');
 
         $lists = $query->get();
         return $lists;
