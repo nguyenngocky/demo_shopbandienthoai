@@ -59,6 +59,8 @@ class ProductController extends Controller
     // Lấy dữ liệu ra bảng cập nhật sản phẩm
     public function getListUpdate($id){
         $model = new product();
+        $category = new category();
+        $this->v['category'] = $category->getListPro();
         $this->v['obj'] = $model->loadOne($id);
 
         return view('admin.product.update', $this->v);

@@ -32,14 +32,24 @@ class ProductRequest extends FormRequest
                     case 'addProduct':
                         $rules = [
                             'name' => 'required',
-                            'image' => 'required|mimes:jpg,png,jpeg,gif,svg',
+                            'image' => 'required',
                             'price' => 'required|numeric',
+                            'quantity' => 'required|numeric',
                             'discount' => 'required|numeric',
                             'desc' => 'required',
                         ];
                         break;
 
-
+                        case 'Update':
+                        $rules = [
+                            'name' => 'required',
+                            'image' => 'required',
+                            'price' => 'required|numeric',
+                            'quantity' => 'required|numeric',
+                            'discount' => 'required|numeric',
+                            'desc' => 'required',
+                        ];
+                            break;
 
                         
                         default:
@@ -58,11 +68,12 @@ class ProductRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên sản phẩm!',
             'image.required' => 'Vui lòng up ảnh!',
             'price.required' => 'Vui lòng nhập giá!',
+            'quantity.required' => 'Vui lòng nhập số lượng!',
             'discount.required' => 'Vui lòng nhập giảm giá!',
             'desc.required' => 'Vui lòng nhập mô tả ngắn!',
             'discount.numeric' => 'Giảm giá phải là số!',
-            '.numeric' => 'Giá phải là số!',
-            'image.mimes' => 'Ảnh phải thuộc định dạng: jpg,png,jpeg,gif,svg!',
+            'price.numeric' => 'Giá phải là số!',
+            'quantity.numeric' => 'Số lượng phải là số!',
         ];
     }
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->integer('price');
+            $table->integer('quantity');
+            $table->integer('view')->nullable();
             $table->integer('discount');
             $table->string('desc');
             $table->integer('cate_id');

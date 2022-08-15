@@ -19,6 +19,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Số lượng cấu hình</label>
+                            <input type="number" name="quantity" value="{{ $obj->quantity }}" class="form-control" placeholder="Nhập vào số lượng cấu hình">
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Cấu hình thuộc sản phẩm</label>
                             <select name="pro_id" class="form-select flex-grow-1">
                                 @foreach($Product as $pro)

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('config_product');
             $table->integer('price_cf');
+            $table->integer('quantity');
             $table->integer('pro_id');
             $table->integer('status')->default(1);
             $table->timestamps();

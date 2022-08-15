@@ -1,11 +1,11 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Cập nhật banner')
+@section('title', 'Cập nhật banner 2')
     <div class="card-body h-100">
         <div class="col-12 col-xl-16">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('banner.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('banner_bottom.update.post', ['id' => $obj->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $obj->id }}">
                         <div class="mb-3">
@@ -44,7 +44,7 @@
 
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a class="btn btn-primary" href="{{route('banner')}}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{route('banner_bottom')}}">Quay lại</a>
                     </form>
                     {{-- //Hiển thị thông báo thành công --}}
                     <br>

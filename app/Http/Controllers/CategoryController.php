@@ -94,9 +94,11 @@ class CategoryController extends Controller
     public function delete($id){
 
         $pro = product::where('cate_id', $id)->first();
-        config::where('pro_id', $pro->id)->delete();
-        color::where('pro_id', $pro->id)->delete();
-        $pro->delete();
+        if(isset($pro->cate_id)){
+            config::where('pro_id', $pro->id)->delete();
+            color::where('pro_id', $pro->id)->delete();
+            $pro->delete();
+        }
         category::destroy($id);
         Session::flash('success', 'Xóa danh mục thành công!');
         return back();

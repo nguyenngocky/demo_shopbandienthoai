@@ -63,6 +63,8 @@
                                         <th>Ảnh</th>
                                         <th>Giá</th>
                                         <th>Giảm giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Lượt xem</th>
                                         <th>Mô tả ngắn</th>
                                         <th>Sản phẩm thuộc danh mục</th>
                                         <th>Trạng thái</th>
@@ -101,6 +103,11 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Giá</label>
                                                                     <input type="number" name="price" class="form-control" placeholder="Nhập vào giá sản phẩm">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Số lượng</label>
+                                                                    <input type="number" name="quantity" class="form-control" placeholder="Nhập vào số lượng sản phẩm">
                                                                 </div>
 
                                                                 <div class="mb-3">
@@ -151,9 +158,31 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$pro->name}}</td>
                                         <td class="text-center"><img width="100px" src="{{asset('storage/'. $pro->image)}}" alt=""></td>
-                                        <td>{{ $pro->price}}</td>
-                                        <td>{{ $pro->discount}}</td>
-                                        <td style="max-width: 200px;">{{ $pro->desc}}</td>
+                                        <td>{{ number_format($pro->price)}}</td>
+                                        <td>{{ $pro->discount}}%</td>
+                                        <td>{{ $pro->quantity}}</td>
+                                        <td>{{ $pro->view}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sizedModalMd{{$pro->id}}">
+                                                Xem chi tiết
+                                            </button>
+                                            <div class="modal fade" id="sizedModalMd{{$pro->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Mô tả ngắn</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body m-3">
+                                                            <p class="mb-0">{{$pro->desc}}</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
 
                                             @foreach ($category as $cate)
                                                @if($pro->cate_id == $cate->id)
@@ -175,7 +204,8 @@
                                             <a href="{{route('product.update', ['id' => $pro->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                                             <a onclick="return Del()" href="{{route('deleteProduct', ['id' => $pro->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                                             <a href="{{route('product.config', ['id' => $pro->id])}}">Cấu hình</a> /
-                                            <a href="{{route('product.color', ['id' => $pro->id])}}">Màu sắc</a>
+                                            <a href="{{route('product.color', ['id' => $pro->id])}}">Màu sắc</a> /
+                                            <a href="{{route('product.image', ['id' => $pro->id])}}">Hình ảnh</a>
                                         </td>
                                     </tr>
                                  @endforeach

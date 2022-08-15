@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('color_code');
             $table->integer('price_cl');
+            $table->integer('quantity');
             $table->integer('pro_id');
             $table->integer('status')->default(1);
             $table->timestamps();

@@ -30,6 +30,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Số lượng</label>
+                            <input type="number" name="quantity" value="{{ $obj->quantity }}" class="form-control" placeholder="Nhập vào số lượng sản phẩm">
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Giảm giá sản phẩm</label>
                             <input type="text" name="discount" value="{{$obj->discount}}" class="form-control" placeholder="Nhập vào giá">
                         </div>
@@ -37,6 +42,19 @@
                         <div class="mb-3">
                             <label class="form-label">Mô tả ngắn</label>
                             <textarea name="desc" class="form-control" rows="2" placeholder="Mô tả ngắn sản phẩm" style="height: 64px;">{{$obj->desc}}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Sản phẩm thuộc danh mục</label>
+                            <select name="cate_id" class="form-select flex-grow-1">
+                                @foreach($category as $cate)
+                                @if($obj->cate_id == $cate->id)
+                                <option selected value="{{$obj->cate_id}}">{{$cate->name}}</option>
+                                @else
+                                    <option value="{{$cate->id}}">{{$cate->name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">

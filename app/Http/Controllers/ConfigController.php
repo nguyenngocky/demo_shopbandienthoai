@@ -29,12 +29,15 @@ class ConfigController extends Controller
     public function addConfig(Request $request){
             $rules = [
                 'config_product' => 'required',
-                'price_cf' => 'required|numeric'
+                'price_cf' => 'required|numeric',
+                'quantity' => 'required|numeric'
             ];
             $messages = [
                 'config_product.required' => 'Vui lòng nhập thông tin cấu hình sản phẩm!',
                 'price_cf.required' => 'Vui lòng nhập giá cấu hình sản phẩm! Nếu không có giá để là 0! ',
-                'price_cf.numeric' => 'Giá cấu hình sản phẩm phải là số!'
+                'price_cf.numeric' => 'Giá cấu hình sản phẩm phải là số!',
+                'quantity.required' => 'Vui lòng nhập số lượng cấu hình sản phẩm! ',
+                'quantity.numeric' => 'Số lượng cấu hình sản phẩm phải là số!'
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
@@ -74,12 +77,15 @@ class ConfigController extends Controller
     public function Update($id, Request $request) {
         $rules = [
             'config_product' => 'required',
-            'price_cf' => 'required|numeric'
+            'price_cf' => 'required|numeric',
+            'quantity' => 'required|numeric'
         ];
         $messages = [
             'config_product.required' => 'Vui lòng nhập thông tin cấu hình sản phẩm!',
             'price_cf.required' => 'Vui lòng nhập giá cấu hình sản phẩm! Nếu không có giá để là 0! ',
-            'price_cf.numeric' => 'Giá cấu hình sản phẩm phải là số!'
+            'price_cf.numeric' => 'Giá cấu hình sản phẩm phải là số!',
+            'quantity.required' => 'Vui lòng nhập số lượng cấu hình sản phẩm! ',
+            'quantity.numeric' => 'Số lượng cấu hình sản phẩm phải là số!'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {

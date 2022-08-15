@@ -63,6 +63,7 @@
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('product')}}">Sản phẩm</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('user')}}">Người dùng</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('banner')}}">Banner</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{route('banner_bottom')}}">Banner 2</a></li>
 						</ul>
 					</li>
 

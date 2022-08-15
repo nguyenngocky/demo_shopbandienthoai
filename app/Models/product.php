@@ -11,7 +11,7 @@ class product extends Model
 {
     use HasFactory;
     protected $table = 'product';
-    protected $fillable = ['id', 'name', 'image', 'price','discount','desc','cate_id', 'status', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'name', 'image', 'price','quantity','view','discount','desc','cate_id', 'status', 'created_at', 'updated_at'];
 
     public function loadList($param = []){
         $query = DB::table($this->table)
@@ -66,7 +66,31 @@ class product extends Model
                ->where('status', '=', '1')
                ->orderBy('id', 'desc');
 
-        $lists = $query->get();
+        $lists = $query->paginate(8);
+        return $lists;
+    }
+
+     // lấy sản phẩm giảm giá ra trang chủ
+     public function getListHomeSale() {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->where('discount', '>', '0')
+               ->orderBy('id', 'desc');
+
+        $lists = $query->paginate(8);
+        return $lists;
+    }
+
+    // lấy sản phẩm có nhiều lượt xem ra trang chủ
+    public function getListHomeEye() {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->where('view', '>', '0')
+               ->orderBy('view', 'desc');
+
+        $lists = $query->paginate(8);
         return $lists;
     }
 

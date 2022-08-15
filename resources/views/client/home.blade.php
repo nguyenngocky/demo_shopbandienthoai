@@ -2,49 +2,6 @@
 @section('content')
 <div class="offcanvas-overlay"></div>
         <!-- offcanvas overlay end -->
-        <!-- OffCanvas Wishlist Start -->
-        <div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
-            <div class="inner">
-                <div class="head">
-                    <span class="title">Wishlist</span>
-                    <button class="offcanvas-close">×</button>
-                </div>
-                <div class="body customScroll">
-                    <ul class="minicart-product-list">
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/1.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Modern Smart Phone</a>
-                                <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/2.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Bluetooth Headphone</a>
-                                <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="single-product.html" class="image"><img src="assets/images/product-image/3.webp" alt="Cart product Image"></a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Smart Music Box</a>
-                                <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
-                                <a href="#" class="remove">×</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="foot">
-                    <div class="buttons">
-                        <a href="wishlist.html" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- OffCanvas Wishlist End -->
         <!-- OffCanvas Cart Start -->
         <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
             <div class="inner">
@@ -320,6 +277,11 @@
                                 <!-- Single Prodect -->
                                 <div class="product">
                                     <span class="badges">
+                                        @if($pro->discount > 0)
+                                        <span class="sale">-{{$pro->discount}}%</span>
+                                        @else
+                                        
+                                        @endif
                                         <span class="new">New</span>
                                     </span>
                                     <div class="thumb">
@@ -345,17 +307,74 @@
                                                 $giamgia = $pro->price * $pro->discount / 100;
                                                 $tong = $pro->price - $giamgia
                                                 @endphp
-                                                {{$tong}} 
+                                                {{number_format($tong)}} 
                                                 VNĐ</span>
                                         </span>
                                     </div>
-                                    <div class="actions">
-                                                <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
-                                                    class="pe-7s-shopbag"></i></button>
-                                                <button class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-look"></i></button>
-                                                <button class="action compare" title="Compare" data-bs-toggle="modal" data-bs-target="#exampleModal-Compare"><i
-                                                        class="pe-7s-refresh-2"></i></button>
-                                            </div>
+                                </div>
+                            </div>
+
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Area End -->
+
+        <!-- Product Area Start -->
+        <div class="product-area pb-100px">
+            <div class="container">
+                <!-- Section Title & Tab Start -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title text-center">
+                            <h2 class="title">Sản phẩm giảm giá</h2>
+                            <p>Danh sách những sản phẩm đang giảm giá của hmart</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section Title & Tab End -->
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-n-30px">
+
+                            @foreach ($listProHomeSale as $pro)
+                            <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                <!-- Single Prodect -->
+                                <div class="product">
+                                    <span class="badges">
+                                        <span class="sale">-{{$pro->discount}}%</span>
+                                    </span>
+                                    <div class="thumb">
+                                        <a href="{{route('proDetailPage', ['id' => $pro->id])}}" class="image">
+                                            <img width="270px" height="274px" src="{{ $pro->image?''.Storage::url($pro->image):'' }}" alt="Product" />
+                                            <img class="hover-image" src="{{ $pro->image?''.Storage::url($pro->image):'' }}" />
+                                        </a>
+                                    </div>
+                                    <div class="content">
+                                        @foreach ($getNameCate as $cate)
+                                        @if($cate->id == $pro->cate_id)
+                                        <span class="category"><a href="{{route('homePageCate', ['id' => $cate->id])}}">{{$cate->name}}</a></span>
+                                        @endif
+                                        @endforeach
+                                        <h5 class="title"><a href="{{route('proDetailPage', ['id' => $pro->id])}}">{{$pro->name}}
+                                            </a>
+                                        </h5>
+                                        <span class="price">
+                                            <span class="new">
+                                                @php
+                                                $giamgia = 0;
+                                                $tong = 0;
+                                                $giamgia = $pro->price * $pro->discount / 100;
+                                                $tong = $pro->price - $giamgia
+                                                @endphp
+                                                {{number_format($tong)}} 
+                                                VNĐ</span>
+                                        </span>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             @endforeach
@@ -366,172 +385,109 @@
             </div>
         </div>
         <!-- Product Area End -->
-        <!-- Banner Area Start -->
-        <div class="banner-area style-three pb-100px">
-            <div class="container">
-                <div class="row">
-                    @foreach($listBannerHome as $banner)
-                    <div class="col-md-6">
-                        <div class="single-banner mb-lm-30px">
-                            <img width="572px" height="542px" src="{{ $banner->image?''.Storage::url($banner->image):'' }}" alt="">
-                            <div class="banner-content nth-child-3">
-                                <h3 class="title"> {{$banner->title}} </h3>
-                                <span style="color: white">{{$banner->desc}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <!-- Banner Area End -->
-        <!-- Feature product area start -->
-        <div class="feature-product-area pb-100px">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title text-center">
-                            <h2 class="title">Featured Offers</h2>
-                            <p>There are many variations of passages of Lorem Ipsum available</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feature-product-slider swiper-container slider-nav-style-1">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide feature-right-content">
-                            <div class="image-side">
-                                <img src="assets/images/feature-image/2.webp" alt="">
-                                <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
-                                    class="pe-7s-shopbag"></i></button>
-                            </div>
-                            <div class="content-side">
-                                <div class="deal-timing">
-                                    <span>End In:</span>
-                                    <div data-countdown="2021/09/15"></div>
-                                </div>
-                                <div class="prize-content">
-                                    <h5 class="title"><a href="single-product.html">Ladies Smart Watch</a></h5>
-                                    <span class="price">
-                                <span class="old">$48.50</span>
-                                    <span class="new">$38.50</span>
-                                    </span>
-                                </div>
-                                <div class="product-feature">
-                                    <ul>
-                                        <li>Predecessor : <span>None.</span></li>
-                                        <li>Support Type : <span>Neutral.</span></li>
-                                        <li>Cushioning : <span>High Energizing.</span></li>
-                                        <li>Total Weight : <span> 300gm</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide feature-right-content">
-                            <div class="image-side">
-                                <img src="assets/images/feature-image/3.webp" alt="">
-                                <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
-                                    class="pe-7s-shopbag"></i></button>
-                            </div>
-                            <div class="content-side">
-                                <div class="deal-timing">
-                                    <span>End In:</span>
-                                    <div data-countdown="2021/09/15"></div>
-                                </div>
-                                <div class="prize-content">
-                                    <h5 class="title"><a href="single-product.html">Ladies Smart Watch</a></h5>
-                                    <span class="price">
-                                <span class="old">$48.50</span>
-                                    <span class="new">$38.50</span>
-                                    </span>
-                                </div>
-                                <div class="product-feature">
-                                    <ul>
-                                        <li>Predecessor : <span>None.</span></li>
-                                        <li>Support Type : <span>Neutral.</span></li>
-                                        <li>Cushioning : <span>High Energizing.</span></li>
-                                        <li>Total Weight : <span> 300gm</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide feature-right-content">
-                            <div class="image-side">
-                                <img src="assets/images/feature-image/2.webp" alt="">
-                                <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
-                                    class="pe-7s-shopbag"></i></button>
-                            </div>
-                            <div class="content-side">
-                                <div class="deal-timing">
-                                    <span>End In:</span>
-                                    <div data-countdown="2021/09/15"></div>
-                                </div>
-                                <div class="prize-content">
-                                    <h5 class="title"><a href="single-product.html">Ladies Smart Watch</a></h5>
-                                    <span class="price">
-                                <span class="old">$48.50</span>
-                                    <span class="new">$38.50</span>
-                                    </span>
-                                </div>
-                                <div class="product-feature">
-                                    <ul>
-                                        <li>Predecessor : <span>None.</span></li>
-                                        <li>Support Type : <span>Neutral.</span></li>
-                                        <li>Cushioning : <span>High Energizing.</span></li>
-                                        <li>Total Weight : <span> 300gm</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide feature-right-content">
-                            <div class="image-side">
-                                <img src="assets/images/feature-image/3.webp" alt="">
-                                <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
-                                    class="pe-7s-shopbag"></i></button>
-                            </div>
-                            <div class="content-side">
-                                <div class="deal-timing">
-                                    <span>End In:</span>
-                                    <div data-countdown="2021/09/15"></div>
-                                </div>
-                                <div class="prize-content">
-                                    <h5 class="title"><a href="single-product.html">Ladies Smart Watch</a></h5>
-                                    <span class="price">
-                                <span class="old">$48.50</span>
-                                    <span class="new">$38.50</span>
-                                    </span>
-                                </div>
-                                <div class="product-feature">
-                                    <ul>
-                                        <li>Predecessor : <span>None.</span></li>
-                                        <li>Support Type : <span>Neutral.</span></li>
-                                        <li>Cushioning : <span>High Energizing.</span></li>
-                                        <li>Total Weight : <span> 300gm</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-buttons">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Feature product area End -->
+
+         
+        
         <!-- Fashion Area Start -->
-        <div class="fashion-area" data-bg-image="assets/images/fashion/fashion-bg.webp">
+        @foreach ($listBannerHome2 as $banner)
+        <div class="fashion-area" data-bg-image="{{ $banner->image?''.Storage::url($banner->image):'' }}">
             <div class="container h-100">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-12 text-center">
-                        <h2 class="title"> <span>Smart Fashion</span> With Smart Devices </h2>
-                        <a href="shop-left-sidebar.html" class="btn btn-primary text-capitalize m-auto">Shop All Devices</a>
+                        <h2 class="title"> <span>{{$banner->desc}}</span> {{$banner->title}} </h2>
+                   
                     </div>
                 </div>
             </div>
         </div>
+        @endforeach
         <!-- Fashion Area End -->
+<br>
+<br>
+        <!-- Product Area Start -->
+        <div class="product-area pb-100px">
+            <div class="container">
+                <!-- Section Title & Tab Start -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title text-center">
+                            <h2 class="title">Sản phẩm có lượt xem nhiều nhất</h2>
+                            <p>Danh sách những sản phẩm có lượt xem nhiều nhất của hmart</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section Title & Tab End -->
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-n-30px">
+
+                            @foreach ($listProHomeEye as $pro)
+                            <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                <!-- Single Prodect -->
+                                <div class="product">
+                                    <span class="badges">
+                                        <span class="new">
+                                            <svg version="1.1" witdh="20px" fill="white" height="20px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M609.608,315.426c3.19-5.874,3.19-12.979,0-18.853c-58.464-107.643-172.5-180.72-303.607-180.72
+                                                        S60.857,188.931,2.393,296.573c-3.19,5.874-3.19,12.979,0,18.853C60.858,423.069,174.892,496.147,306,496.147
+                                                        S551.143,423.069,609.608,315.426z M306,451.855c-80.554,0-145.855-65.302-145.855-145.855S225.446,160.144,306,160.144
+                                                        S451.856,225.446,451.856,306S386.554,451.855,306,451.855z"/>
+                                                    <path d="M306,231.67c-6.136,0-12.095,0.749-17.798,2.15c5.841,6.76,9.383,15.563,9.383,25.198c0,21.3-17.267,38.568-38.568,38.568
+                                                        c-9.635,0-18.438-3.541-25.198-9.383c-1.401,5.703-2.15,11.662-2.15,17.798c0,41.052,33.279,74.33,74.33,74.33
+                                                        s74.33-33.279,74.33-74.33S347.052,231.67,306,231.67z"/>
+                                                </g>
+                                            </g>
+
+                                            </svg>
+                                            {{$pro->view}}</span>
+                                            @if($pro->discount > 0)
+                                            <span class="sale">-{{$pro->discount}}%</span>
+                                            @else
+                                            
+                                            @endif
+                                    </span>
+                                    <div class="thumb">
+                                        <a href="{{route('proDetailPage', ['id' => $pro->id])}}" class="image">
+                                            <img width="270px" height="274px" src="{{ $pro->image?''.Storage::url($pro->image):'' }}" alt="Product" />
+                                            <img class="hover-image" src="{{ $pro->image?''.Storage::url($pro->image):'' }}" />
+                                        </a>
+                                    </div>
+                                    <div class="content">
+                                        @foreach ($getNameCate as $cate)
+                                        @if($cate->id == $pro->cate_id)
+                                        <span class="category"><a href="{{route('homePageCate', ['id' => $cate->id])}}">{{$cate->name}}</a></span>
+                                        @endif
+                                        @endforeach
+                                        <h5 class="title"><a href="{{route('proDetailPage', ['id' => $pro->id])}}">{{$pro->name}}
+                                            </a>
+                                        </h5>
+                                        <span class="price">
+                                            <span class="new">
+                                                @php
+                                                $giamgia = 0;
+                                                $tong = 0;
+                                                $giamgia = $pro->price * $pro->discount / 100;
+                                                $tong = $pro->price - $giamgia
+                                                @endphp
+                                                {{number_format($tong)}} 
+                                                VNĐ</span>
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Area End -->
+
         <!-- Feature Area Srart -->
         <div class="feature-area pt-100px pb-100px">
             <div class="container">
@@ -577,56 +533,6 @@
             </div>
         </div>
         <!-- Feature Area End -->
-        <!-- Blog area start from here -->
-        <div class="main-blog-area pb-100px">
-            <div class="container">
-                <!-- section title start -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-title text-center mb-30px0px">
-                            <h2 class="title">Latest Blog</h2>
-                            <p> There are many variations of passages of Lorem Ipsum available</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- section title start -->
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6 mb-xs-30px">
-                        <div class="single-blog">
-                            <div class="blog-image">
-                                <a href="blog-single-left-sidebar.html"><img src="assets/images/blog-image/1.webp" class="img-responsive w-100" alt=""></a>
-                            </div>
-                            <div class="blog-text">
-                                <div class="blog-athor-date line-height-1">
-                                    <span class="blog-date"><i class="fa fa-calendar" aria-hidden="true"></i> 27,Jun 2030</span>
-                                    <span><a class="blog-author" href="blog-grid.html"><i class="fa fa-user" aria-hidden="true"></i> Wild Nick</a></span>
-                                </div>
-                                <h5 class="blog-heading"><a class="blog-heading-link" href="blog-single-left-sidebar.html">10 Quick Tips About Smart Product</a></h5>
-                                <p>Lorem ipsum dolor sit amet consl adipisi elit, sed do eiusmod templ incididunt ut labore</p>
-                                <a href="blog-single-left-sidebar.html" class="btn btn-primary blog-btn"> Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End single blog -->
-                    <div class="col-lg-6 col-sm-6">
-                        <div class="single-blog">
-                            <div class="blog-image">
-                                <a href="blog-single-left-sidebar.html"><img src="assets/images/blog-image/2.webp" class="img-responsive w-100" alt=""></a>
-                            </div>
-                            <div class="blog-text">
-                                <div class="blog-athor-date line-height-1">
-                                    <span class="blog-date"><i class="fa fa-calendar" aria-hidden="true"></i> 27,Jun 2030</span>
-                                    <span><a class="blog-author" href="blog-grid.html"><i class="fa fa-user" aria-hidden="true"></i> Oaklee Odom</a></span>
-                                </div>
-                                <h5 class="blog-heading"><a class="blog-heading-link" href="blog-single-left-sidebar.html">5 Real-Life Lessons About Smart Product</a></h5>
-                                <p>Lorem ipsum dolor sit amet consl adipisi elit, sed do eiusmod templ incididunt ut labore</p>
-                                <a href="blog-single-left-sidebar.html" class="btn btn-primary blog-btn"> Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End single blog -->
-                </div>
-            </div>
-        </div>
-        <!-- Blog area end here -->
+        
+        
 @endsection

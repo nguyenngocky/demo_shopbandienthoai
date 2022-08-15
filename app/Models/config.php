@@ -11,7 +11,7 @@ class config extends Model
 {
     use HasFactory;
     protected $table = 'config';
-    protected $fillable = ['id', 'config_product', 'price_cf', 'pro_id','status', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'config_product', 'price_cf', 'quantity', 'pro_id','status', 'created_at', 'updated_at'];
 
     // Lấy dữ liệu ra bảng
     public function loadList($id,$param = []){

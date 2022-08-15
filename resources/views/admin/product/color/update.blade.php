@@ -25,6 +25,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Số lượng</label>
+                            <input type="text" name="quantity" value="{{ $obj->quantity }}" class="form-control" placeholder="Nhập vào tên màu">
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Cấu hình thuộc sản phẩm</label>
                             <select name="pro_id" class="form-select flex-grow-1">
                                 @foreach($Product as $pro)

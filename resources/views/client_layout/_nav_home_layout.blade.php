@@ -17,6 +17,7 @@ $listCate = $category->loadListClient();
                             <li><a href="index-2.html">Home 2</a></li>
                         </ul>
                     </li> --}}
+                    <li><a href="{{route('homePageClient')}}">Trang chủ</a></li>
                     @foreach ($listCate as $cate)
                         <li><a href="{{route('homePageCate', ['id' => $cate->id])}}">{{$cate->name}}</a></li>
                     @endforeach

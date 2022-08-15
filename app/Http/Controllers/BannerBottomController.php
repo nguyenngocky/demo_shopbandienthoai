@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\banner;
+use App\Models\banner_bottom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-class BannerController extends Controller
+class BannerBottomController extends Controller
 {
     private $v;
     public function __construct(){
@@ -17,13 +17,13 @@ class BannerController extends Controller
     }
     
     public function getList(){
-        $model = new banner();
+        $model = new banner_bottom();
         $this->v['listBanner'] = $model->loadList();
 
-        return view('admin.banner.list', $this->v);
+        return view('admin.banner_bottom.list', $this->v);
     }
 
-    // Thêm sản phẩm
+    // Thêm banner
     public function addBanner(Request $request){
 
         $rules = [
@@ -50,18 +50,18 @@ class BannerController extends Controller
             
             unset($params['cols']['_token']);
 
-            $model= new banner();
-            $res = $model->saveAddBanner($params);
+            $model= new banner_bottom();
+            $res = $model->saveAddBannerB($params);
             if($res == null) {
                 Session::flash('error', 'Vui lòng nhập dữ liệu!');
-                return Redirect::to('/banner');
+                return Redirect::to('/banner_bottom');
             }
             else if ($res > 0) {
                 Session::flash('success', 'Thêm thành công!');
-                return Redirect::to('/banner');
+                return Redirect::to('/banner_bottom');
             }else {
                 Session::flash('error', 'Lỗi thêm mới!');
-                return Redirect::to('/banner');
+                return Redirect::to('/banner_bottom');
             }
 
         }
@@ -70,10 +70,10 @@ class BannerController extends Controller
 
     // Lấy dữ liệu ra bảng cập nhật sản phẩm
     public function getListUpdate($id){
-        $model = new banner();
+        $model = new banner_bottom();
         $this->v['obj'] = $model->loadOne($id);
 
-        return view('admin.banner.update', $this->v);
+        return view('admin.banner_bottom.update', $this->v);
     }
 
     // Cập nhật sản phẩm
@@ -92,7 +92,7 @@ class BannerController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }else {
-            $method_route = 'banner.update';
+            $method_route = 'banner_bottom.update';
             $params = [];
             $params['cols'] = $request->post();
 
@@ -101,10 +101,10 @@ class BannerController extends Controller
             }
 
             unset($params['cols']['_token']);
-            $model = new banner();
+            $model = new banner_bottom();
             $obj = $model->loadOne($id);
             $params['cols']['id'] = $id;
-            $res = $model->saveUpdateBanner($params);
+            $res = $model->saveUpdateBannerB($params);
             if($res == null) {
                 Session::flash('error', 'Bạn chưa thực hiện thay đổi nào!');
                 return Redirect()->route($method_route, ['id' => $id]);
@@ -114,7 +114,7 @@ class BannerController extends Controller
                 return Redirect()->route($method_route, ['id' => $id]);
             }else {
                 Session::flash('error', 'Lỗi cập nhật!');
-                return Redirect::to('/banner');
+                return Redirect::to('/banner_bottom');
             }
         }
     }
@@ -122,20 +122,20 @@ class BannerController extends Controller
     // xóa banner
     public function delete($id){
 
-        banner::destroy($id);
+        banner_bottom::destroy($id);
         Session::flash('success', 'Xóa thành công!');
         return back();
         
     }
 
-    public function ActiveStatusBanner($id){
-        DB::table('banner')->where('id', $id)->update(['status' =>  0]);
+    public function ActiveStatusBannerB($id){
+        DB::table('banner_bottom')->where('id', $id)->update(['status' =>  0]);
         Session::flash('success', 'Cập nhật trạng thái thành công!');
         return back();
     }
 
-    public function UnactiveStatusBanner($id){
-        DB::table('banner')->where('id', $id)->update(['status' =>  1]);
+    public function UnactiveStatusBannerB($id){
+        DB::table('banner_bottom')->where('id', $id)->update(['status' =>  1]);
         Session::flash('success', 'Cập nhật trạng thái thành công!');
         return back();
     }

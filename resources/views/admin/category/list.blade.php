@@ -129,6 +129,7 @@
                                                 <a href="{{route('ActiveStatus', ['id' => $cate->id])}}" class="btn btn-danger">Không hoạt động</a>
                                              @endif                                          
                                         </td>
+                                
                                         <td>{{$cate->created_at}}</td>
                                         <td>{{$cate->updated_at}}</td>
                                         <td>

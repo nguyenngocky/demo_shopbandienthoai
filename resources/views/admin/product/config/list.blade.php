@@ -61,6 +61,7 @@
                                         <th>STT</th>
                                         <th>Thông tin cấu hình</th>
                                         <th>Giá cấu hình</th>
+                                        <th>Số lượng</th>
                                         <th>Cấu hình thuộc sản phẩm</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
@@ -90,6 +91,11 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Giá cấu hình</label>
                                                                     <input type="number" name="price_cf" class="form-control" placeholder="Nhập vào giá cấu hình">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Số lượng cấu hình</label>
+                                                                    <input type="number" name="quantity" class="form-control" placeholder="Nhập vào số lượng cấu hình">
                                                                 </div>
 
                                                                 <div class="mb-3">
@@ -133,6 +139,7 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td style="max-width: 500px">{{$conf->config_product}}</td>
                                         <td>{{ $conf->price_cf}}</td>
+                                        <td>{{ $conf->quantity}}</td>
                                         <td>{{$getNamePro->name}}</td>
                                         <td>
                                                 @if($conf->status == 1)

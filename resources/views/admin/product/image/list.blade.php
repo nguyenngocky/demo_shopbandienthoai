@@ -1,6 +1,6 @@
 @extends('admin_layout.index')
 @section('content')
-@section('title', 'Danh sách màu sản phẩm')
+@section('title', 'Danh sách ảnh')
 
     <main class="content">
         <div class="container-fluid p-0">
@@ -59,11 +59,10 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên màu</th>
-                                        <th>Mã màu ( Nhập mã màu đúng như với tên màu)</th>
-                                        <th>Giá màu (Không có thì để = 0)</th>
-                                        <th>Số lượng</th>
-                                        <th>Màu thuộc sản phẩm</th>
+                                        <th>Ảnh 1</th>
+                                        <th>Ảnh 2</th>
+                                        <th>Ảnh 3</th>
+                                        <th>Ảnh thuộc sản phẩm</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
                                         <th>Ngày cập nhật</th>
@@ -75,37 +74,41 @@
                                             <!-- Create -->
                                             <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
-                                                    <form action="{{route('product.color.add', ['id' => $getNamePro->id])}}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{route('product.image.add', ['id' => $getNamePro->id])}}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">Thêm màu</h5>
+                                                                <h5 class="modal-title">Thêm Ảnh</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
+
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Tên màu</label>
-                                                                    <input type="text" name="name" class="form-control" placeholder="Nhập vào tên màu">
+                                                                    <label class="form-label w-100">Ảnh 1</label>
+                                                                    <img id="image" src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg" alt="your image"
+                                                                        style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-fluid"/>
+                                                                    <input name="image1" type="file" id="img">
+                                                                    <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Mã màu ( Nhập mã màu đúng như với tên màu)</label>
-                                                                    <a target="_blank" class="sidebar-link" href="https://imagecolorpicker.com/vi">Liên kết lấy mã màu</a>
-                                                                    <input type="text" name="color_code" class="form-control" placeholder="Nhập vào mã màu">
+                                                                    <label class="form-label w-100">Ảnh 2</label>
+                                                                    <img id="image2" src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg" alt="your image"
+                                                                        style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-fluid"/>
+                                                                    <input name="image2" type="file" id="img2">
+                                                                    <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Số lượng</label>
-                                                                    <input type="text" name="quantity" class="form-control" placeholder="Nhập vào tên màu">
+                                                                    <label class="form-label w-100">Ảnh 3</label>
+                                                                    <img id="image3" src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg" alt="your image"
+                                                                        style="max-width: 200px; height:100px; margin-bottom: 10px;" class="img-fluid"/>
+                                                                    <input name="image3" type="file" id="img3">
+                                                                    <small class="form-text text-muted">Chọn ảnh kích thước nhỏ hơn 5mb</small>
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Giá màu (Không có thì để = 0)</label>
-                                                                    <input type="number" name="price_cl" class="form-control" placeholder="Nhập vào giá màu">
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Màu thuộc sản phẩm</label>
+                                                                    <label class="form-label">Ảnh thuộc sản phẩm</label>
                                                                     <select name="pro_id" class="form-select flex-grow-1">
                                                                         @foreach($Product as $pro)
                                                                             @if($pro->id == $getNamePro->id)
@@ -140,34 +143,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($listColor as $color)
+                                @foreach ($listImage as $img)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$color->name}}</td>
-                                        <td><div style="width: 50px; height: 50px; background: {{$color->color_code}}"></div>{{$color->color_code}}</td>
-                                        <td>{{$color->price_cl}}</td>
-                                        <td>{{$color->quantity}}</td>
+
+                                        <td class="text-center"><img width="100px" src="{{asset('storage/'. $img->image1)}}" alt=""></td>
+                                        <td class="text-center"><img width="100px" src="{{asset('storage/'. $img->image2)}}" alt=""></td>
+                                        <td class="text-center"><img width="100px" src="{{asset('storage/'. $img->image3)}}" alt=""></td>
                                         <td>{{$getNamePro->name}}</td>
                                         <td>
-                                                @if($color->status == 1)
-                                                <a href="{{route('ActiveStatusColor', ['id' => $color->id])}}" class="btn btn-success">Hoạt động</a>
+                                                @if($img->status == 1)
+                                                <a href="{{route('UnactiveStatusImage', ['id' => $img->id])}}" class="btn btn-success">Hoạt động</a>
                                                 @endif
-                                                @if($color->status == 0)
-                                                <a href="{{route('UnactiveStatusColor', ['id' => $color->id])}}" class="btn btn-danger">Không hoạt động</a>
+                                                @if($img->status == 0)
+                                                <a href="{{route('ActiveStatusImage', ['id' => $img->id])}}" class="btn btn-danger">Không hoạt động</a>
                                              @endif                                          
                                         </td>
-                                        <td>{{$color->created_at}}</td>
-                                        <td>{{$color->updated_at}}</td>
+                                
+                                        <td>{{$img->created_at}}</td>
+                                        <td>{{$img->updated_at}}</td>
                                         <td>
-                                            <a href="{{route('product.color.update', ['id' => $color->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                                            <a  href="{{route('deleteColor', ['id' => $color->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                            <a href="{{route('product.image.update', ['id' => $img->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                            <a onclick="return Del()" href="{{route('deleteImage', ['id' => $img->id])}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                            <a href="{{route('product')}}">Sản phẩm</a>
                                         </td>
                                     </tr>
                                  @endforeach
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                {{$listColor->links()}} 
+                                {{$listImage->links()}} 
                             </div>
                         </div>
                     </div>
@@ -185,5 +190,36 @@
 			});
 		});
 	</script>
+    <script>
+        function Del(name){
+            return confirm("Bạn có muốn xóa?");
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+     $(function(){
+         function readURL(input, selector) {
+             if (input.files && input.files[0]) {
+                 let reader = new FileReader();
+ 
+                 reader.onload = function (e) {
+                     $(selector).attr('src', e.target.result);
+                 };
+ 
+                 reader.readAsDataURL(input.files[0]);
+             }
+         }
+         $("#img").change(function () {
+             readURL(this, '#image');
+         });
+         $("#img2").change(function () {
+             readURL(this, '#image2');
+         });
+         $("#img3").change(function () {
+             readURL(this, '#image3');
+         });
+ 
+     });
+ </script>
 
 @endsection

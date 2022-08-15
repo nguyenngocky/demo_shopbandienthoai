@@ -61,6 +61,15 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/deleteColor/{id}', 'ColorController@delete')->name('deleteColor');
     Route::get('/product-color/update/{id}', 'ColorController@getListUpdate')->name('product.color.update');
     Route::post('/product-color/update/{id}', 'ColorController@Update')->name('product.color.update.post');
+
+    // Quản trị hình ảnh
+    Route::get('/image/{id}', 'ImageController@getList')->name('product.image');
+    Route::post('/image/{id}', 'ImageController@addImage')->name('product.image.add');
+    Route::get('/deleteImage/{id}', 'ImageController@delete')->name('deleteImage');
+    Route::get('/image/update/{id}', 'ImageController@getListUpdate')->name('product.image.update');
+    Route::post('/image/update/{id}', 'ImageController@Update')->name('product.image.update.post');
+    Route::get('/ActiveStatusImage/{id}', 'ImageController@ActiveStatusImage')->name('ActiveStatusImage');
+    Route::get('/UnactiveStatusImage/{id}', 'ImageController@UnactiveStatusImage')->name('UnactiveStatusImage');
     
     // Quản trị người dùng
     Route::get('/user', 'UserController@getList')->name('user');
@@ -75,10 +84,19 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/banner', 'BannerController@getList')->name('banner');
     Route::post('/banner', 'BannerController@addBanner')->name('addBanner');
     Route::get('/deleteBanner/{id}', 'BannerController@delete')->name('deleteBanner');
-    // Route::get('/banner/update/{id}', 'BannerController@getListUpdate')->name('banner.update');
-    // Route::post('/banner/update/{id}', 'BannerController@Update')->name('banner.update.post');
+    Route::get('/banner/update/{id}', 'BannerController@getListUpdate')->name('banner.update');
+    Route::post('/banner/update/{id}', 'BannerController@Update')->name('banner.update.post');
     Route::get('/ActiveStatusBanner/{id}', 'BannerController@ActiveStatusBanner')->name('ActiveStatusBanner');
     Route::get('/UnactiveStatusBanner/{id}', 'BannerController@UnactiveStatusBanner')->name('UnactiveStatusBanner');
+    
+    // Quản trị banner 2
+    Route::get('/banner_bottom', 'BannerBottomController@getList')->name('banner_bottom');
+    Route::post('/banner_bottom', 'BannerBottomController@addBanner')->name('addBannerBottom');
+    Route::get('/deleteBannerBottom/{id}', 'BannerBottomController@delete')->name('deleteBannerBottom');
+    Route::get('/banner_bottom/update/{id}', 'BannerBottomController@getListUpdate')->name('banner_bottom.update');
+    Route::post('/banner_bottom/update/{id}', 'BannerBottomController@Update')->name('banner_bottom.update.post');
+    Route::get('/ActiveStatusBannerB/{id}', 'BannerBottomController@ActiveStatusBannerB')->name('ActiveStatusBannerB');
+    Route::get('/UnactiveStatusBannerB/{id}', 'BannerBottomController@UnactiveStatusBannerB')->name('UnactiveStatusBannerB');
 
 });
 
@@ -86,3 +104,6 @@ Route::middleware(['auth'])->group(function (){
 Route::get('/', 'client\HomeClientController@home')->name('homePageClient');
 Route::get('/category/{id}', 'client\HomeClientController@proAsCategory')->name('homePageCate');
 Route::get('/product-detail/{id}', 'client\HomeClientController@proDetail')->name('proDetailPage');
+// giỏ hàng
+Route::post('/product-detail/add-to-cart/{id}', 'client\HomeClientController@addToCart')->name('addToCart');
+Route::get('/product-detail/delete-to-cart/{id}', 'client\HomeClientController@deleteItemCart')->name('deleteToCart');

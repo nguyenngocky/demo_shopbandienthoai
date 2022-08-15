@@ -77,18 +77,15 @@
                                                             $giamgia = $pro->price * $pro->discount / 100;
                                                             $tong = $pro->price - $giamgia
                                                             @endphp
-                                                            {{$tong}} 
+                                                            {{number_format($tong)}} 
                                                             VNĐ</span>
                                                     </span>
                                                 </div>
                                                 <div class="actions">
-                                                    <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart"><i
+                                                    <button title="Add To Cart" class="action add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal-Cart{{$pro->id}}"><i
                                                         class="pe-7s-shopbag"></i></button>
-                                                    <button class="action wishlist" title="Wishlist" data-bs-toggle="modal" data-bs-target="#exampleModal-Wishlist"><i
-                                                            class="pe-7s-like"></i></button>
-                                                    <button class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-look"></i></button>
-                                                    <button class="action compare" title="Compare" data-bs-toggle="modal" data-bs-target="#exampleModal-Compare"><i
-                                                            class="pe-7s-refresh-2"></i></button>
+                                                    <button class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal{{$pro->id}}"><i class="pe-7s-look"></i></button>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -112,28 +109,18 @@
                 <div class="shop-sidebar-wrap">
                     <!-- Sidebar single item -->
                     <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Top Categories</h4>
+                        <h4 class="sidebar-title">Danh sách danh mục</h4>
                         <div class="sidebar-widget-category">
                             <ul>
-                                <li><a href="#" class="selected m-0"> All
-                                        <span>(65)</span> </a></li>
-                                <li><a href="#" class=""> Computer
-                                        <span>(12)</span> </a></li>
-                                <li><a href="#" class=""> Covid-19
-                                        <span>(22)</span> </a></li>
-                                <li><a href="#" class=""> Electronics
-                                        <span>(19)</span> </a></li>
-                                <li><a href="#" class=""> Frame Sunglasses
-                                        <span>(17)</span> </a></li>
-                                <li><a href="#" class=""> Furniture
-                                        <span>(7)</span> </a></li>
-                                <li><a href="#" class=""> Genuine Leather
-                                        <span>(9)</span> </a></li>
+                                @foreach ($getNameCate as $cate)
+                                <li><a href="{{route('homePageCate', ['id' => $cate->id])}}" class=""> {{$cate->name}}
+                                        <span></span> </a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <!-- Sidebar single item -->
-                    <div class="sidebar-widget mt-8">
+                    {{-- <div class="sidebar-widget mt-8">
                         <h4 class="sidebar-title">Price Filter</h4>
                         <div class="price-filter">
                             <div class="price-slider-amount">
@@ -141,9 +128,9 @@
                             </div>
                             <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"><div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 20%; width: 60%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 20%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 80%;"></span></div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- Sidebar single item -->
-                    <div class="sidebar-widget">
+                    {{-- <div class="sidebar-widget">
                         <h4 class="sidebar-title">Color</h4>
                         <div class="sidebar-widget-color">
                             <ul class="d-flex flex-wrap">
@@ -163,39 +150,9 @@
                                 <li><a href="#" class="color-14"></a></li>
                             </ul>
                         </div>
-                    </div>
-                    <!-- Sidebar single item -->
-                    <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Size</h4>
-                        <div class="sidebar-widget-size">
-                            <ul>
-                                <li><a href="#" class="selected m-0"> All
-                                        <span>(6)</span> </a></li>
-                                <li><a href="#" class=""> S <span>(12)</span> </a>
-                                </li>
-                                <li><a href="#" class=""> M <span>(21)</span> </a>
-                                </li>
-                                <li><a href="#" class=""> L <span>(16)</span> </a>
-                                </li>
-                                <li><a href="#" class=""> XL <span>(22)</span> </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Sidebar single item -->
-                    <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Brands</h4>
-                        <div class="sidebar-widget-brand">
-                            <ul>
-                                <li><a href="#" class="selected m-0"> Lakmeeto<span>(65)</span> </a></li>
-                                <li><a href="#" class=""> Beautifill <span>(14)</span></a></li>
-                                <li><a href="#" class=""> Made In GD <span>(21)</span></a></li>
-                                <li><a href="#" class=""> Pecifico <span>(16)</span></a></li>
-                                <li><a href="#" class=""> Xlovgtir<span>(12)</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Sidebar single item -->
+                    </div> --}}
+
+                    
                 </div>
             </div>
             

@@ -11,7 +11,7 @@ class color extends Model
 {
     use HasFactory;
     protected $table = 'color';
-    protected $fillable = ['id', 'name', 'color_code', 'price_cl', 'pro_id','status', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'name', 'color_code', 'price_cl','quantity', 'pro_id','status', 'created_at', 'updated_at'];
 
     // Lấy dữ liệu ra bảng
     public function loadList($id,$param = []){
@@ -57,5 +57,18 @@ class color extends Model
         ->where('id', '=', $params['cols']['id'])
         ->update($data);
         return $res;
+    }
+
+    // client
+
+    // lấy dữ liệu ra chi tiết sản phẩm theo id sản phẩm
+    public function getColor($id) {
+        $query = DB::table($this->table)
+               ->select($this->fillable)
+               ->where('status', '=', '1')
+               ->where('pro_id', '=', $id);
+
+        $lists = $query->get();
+        return $lists;
     }
 }

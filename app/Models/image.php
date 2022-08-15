@@ -7,39 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class category extends Model
+class image extends Model
 {
     use HasFactory;
-    protected $table = 'category';
-    protected $fillable = ['id', 'name', 'image', 'status', 'created_at', 'updated_at'];
+    protected $table = 'image';
+    protected $fillable = ['id', 'image1', 'image2', 'image3', 'pro_id', 'status', 'created_at', 'updated_at'];
 
     // Lấy dữ liệu ra bảng
-    public function loadList($param = []){
+    public function loadList($id,$param = []){
         $query = DB::table($this->table)
                ->select($this->fillable)
+               ->where('pro_id', $id)
                ->orderBy('id', 'desc');
 
         $lists = $query->paginate(7);
         return $lists;
     }
 
-    // lấy tất cả danh mục sang sản phẩm
-    public function getListPro($param = []){
-        $query = DB::table($this->table)
-               ->select($this->fillable)
-               ->orderBy('id', 'desc');
-
-        $lists = $query->get();
-        return $lists;
-    }
-    // lưu tạo danh mục
-    public function saveAddCate($params) {
+    // lưu tạo ảnh
+    public function saveAddI($params) {
         $data = $params['cols'];
         $res = DB::table($this->table)->insert($data);
         return $res;
     }
 
-    // lấy dữ liệu ra bảng cập nhật danh mục
+    // lấy dữ liệu ra bảng cập nhật ảnh
     public function loadOne($id, $params = null){
         $query = DB::table($this->table)
                ->where('id', '=', $id);
@@ -48,8 +40,8 @@ class category extends Model
         return $obj;
     }
 
-    // lưu cập nhật danh mục
-    public function saveUpdateCate($params) {
+    // lưu cập nhật ảnh
+    public function saveUpdateI($params) {
         if(empty($params['cols']['id'])) {
             Session::flash('error', 'Không xác định bản cập nhật');
             return null;
@@ -67,19 +59,16 @@ class category extends Model
         return $res;
     }
 
-
-
     // client
 
-    // lấy ra danh sách ở thanh menu
-    public function loadListClient($param = []){
+    // lấy dữ liệu ra chi tiết sản phẩm theo id sản phẩm
+    public function getImage($id) {
         $query = DB::table($this->table)
                ->select($this->fillable)
                ->where('status', '=', '1')
-               ->orderBy('id', 'desc');
+               ->where('pro_id', '=', $id);
 
-        $lists = $query->get();
+        $lists = $query->first();
         return $lists;
     }
-
 }
