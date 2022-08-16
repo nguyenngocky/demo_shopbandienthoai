@@ -190,7 +190,8 @@
     </div>
 </div>
 
-<!-- Section Title & Tab Start -->
+<div class="container">
+    <!-- Section Title & Tab Start -->
 <div class="row">
     <div class="col-12">
         <div class="section-title text-center m-0">
@@ -263,71 +264,10 @@
     </div>
 </div>
 <!-- Product Area End -->
+</div>
 
-<br>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- JavaScript -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
-<!-- CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-<!-- Default theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-<!-- Semantic UI theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
-<!-- Bootstrap theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
 
-<script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-    });
-</script>
-
-<script>
-    var frm = $('#contactForm1');
-
-    frm.submit(function (e) {
-
-        e.preventDefault();
-
-        $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: frm.serialize(),
-            success: function (data) {
-                RenderCart(data);
-                alertify.success('Thêm vào giỏ hàng thành công!');
-            },
-            error: function (data) {
-                alertify.error('Thất bại');
-                console.log(data);
-            },
-        });
-    });
-    $("#cart-item").on("click", "#removeCart", function (){
-        $.ajax({
-            url: 'delete-to-cart/'+$(this).data('id'),
-            type: 'GET',
-            success: function (data) {
-                RenderCart(data);
-                alertify.success('Xóa giỏ hàng thành công!');
-            },
-            error: function (data) {
-                alertify.error('Thất bại');
-                console.log(data);
-            },
-        });
-    });
-
-    function RenderCart(data) {
-        $("#cart-item").empty();
-        $("#cart-item").html(data);
-        $("#show-soluongCart").text($("#soluongCart").val());
-    }
-</script>
 
 @endsection

@@ -11,7 +11,7 @@
             <a href="#" class="title">{{$item['productInfo']['name']}}</a>
             <span class="quantity-price">{{$item['quantity']}} x <span class="amount">{{number_format($item['price'])}} VNĐ</span></span>
             {{-- <a href="#" class="remove">×</a> --}}
-            <span style="cursor: pointer;" id="removeCart" data-id="{{$item['productInfo']['id']}}" class="remove">×</span>
+            <span style="cursor: pointer;" id="removeCart" data-url="{{route('deleteToCart', ['id' => $item['productInfo']['id'] ])}}"  class="remove">×</span>
         </div>
     </li>
     @endforeach

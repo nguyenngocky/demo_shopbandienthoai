@@ -105,5 +105,5 @@ Route::get('/', 'client\HomeClientController@home')->name('homePageClient');
 Route::get('/category/{id}', 'client\HomeClientController@proAsCategory')->name('homePageCate');
 Route::get('/product-detail/{id}', 'client\HomeClientController@proDetail')->name('proDetailPage');
 // giỏ hàng
-Route::post('/product-detail/add-to-cart/{id}', 'client\HomeClientController@addToCart')->name('addToCart');
-Route::get('/product-detail/delete-to-cart/{id}', 'client\HomeClientController@deleteItemCart')->name('deleteToCart');
+Route::post('/add-to-cart/{id}', 'client\HomeClientController@addToCart')->name('addToCart');
+Route::get('/delete-to-cart/{id}', 'client\HomeClientController@deleteItemCart')->name('deleteToCart');

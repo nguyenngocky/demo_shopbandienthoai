@@ -31,6 +31,18 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
     <!-- <link rel="stylesheet" href="assets/css/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css"> -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
 </head>
 
 <body>
@@ -152,50 +164,51 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                 </div>
             </div>
             <!-- Header action area end -->
-            @include('client_layout._nav_home_layout')
+            <div class="offcanvas-overlay" style="display: none;"></div>
+            <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
+                <div class="inner">
+                    <div class="head">
+                        <span class="title">Cart</span>
+                        <button class="offcanvas-close">×</button>
+                    </div>
+                    <div id="cart-item" class="body customScroll">
+                        
+                        @if(Session::has('cart') != null) 
 
-            <div class="offcanvas-overlay">
-                <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
-                    <div class="inner">
-                        <div class="head">
-                            <span class="title">Cart</span>
-                            <button class="offcanvas-close">×</button>
-                        </div>
-                        <div id="cart-item" class="body customScroll">
+                        <ul class="minicart-product-list">
+                            {{-- {{dd($newCart)}} --}}
                             
-                            @if(Session::has('cart') != null) 
-
-                            <ul class="minicart-product-list">
-                                {{-- {{dd($newCart)}} --}}
-                                
-                                @foreach(Session::get('cart')->products as $item)
-                                <li>
-                                    <a href="#" class="image"><img width="112px" height="114px" src="{{ $item['productInfo']['image']?''.Storage::url($item['productInfo']['image']):'http://placehold.it/100x100' }}" alt="Cart product Image"></a>
-                                    <div class="content">
-                                        <a href="#" class="title">{{$item['productInfo']['name']}}</a>
-                                        <span class="quantity-price">{{$item['quantity']}} x <span class="amount">{{number_format($item['price'])}} VNĐ</span></span>
-                                        {{-- <a href="#" class="remove">×</a> --}}
-                                        <span style="cursor: pointer;" id="removeCart" data-id="{{$item['productInfo']['id']}}" class="remove">×</span>
-                                    </div>
-                                </li>
-                                @endforeach
-                            <div> 
-                                <span><strong style="font-size: 25px; margin-right: 30px">Tổng:</strong> <span style="font-size: 20px; color: red">{{number_format(Session::get('cart')->totalPrice)}} VNĐ</span></span>
-                            </div>
-                            </ul>
-                            @else
-                            Hãy mua gì đó !
-                            @endif
+                            @foreach(Session::get('cart')->products as $item)
+                            <li>
+                                <a href="#" class="image"><img width="112px" height="114px" src="{{ $item['productInfo']['image']?''.Storage::url($item['productInfo']['image']):'http://placehold.it/100x100' }}" alt="Cart product Image"></a>
+                                <div class="content">
+                                    <a href="#" class="title">{{$item['productInfo']['name']}}</a>
+                                    <span class="quantity-price">{{$item['quantity']}} x <span class="amount">{{number_format($item['price'])}} VNĐ</span></span>
+                                    {{-- <a href="#" class="remove">×</a> --}}
+                                    <span style="cursor: pointer;" id="removeCart" data-url="{{route('deleteToCart', ['id' => $item['productInfo']['id'] ])}}"  class="remove">×</span>
+                                </div>
+                            </li>
+                            @endforeach
+                        <div> 
+                            <span><strong style="font-size: 25px; margin-right: 30px">Tổng:</strong> <span style="font-size: 20px; color: red">{{number_format(Session::get('cart')->totalPrice)}} VNĐ</span></span>
                         </div>
-                        <div class="foot">
-                            <div class="buttons mt-30px">
-                                <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                                <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
-                            </div>
+                        </ul>
+                        @else
+                        Hãy mua gì đó !
+                        @endif
+                    </div>
+                    <div class="foot">
+                        <div class="buttons mt-30px">
+                            <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
+                            <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            @include('client_layout._nav_home_layout')
+
+            
 
             <div class="mobile-search-box d-lg-none">
                 <div class="container">
@@ -402,6 +415,59 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
 
     <!--Main JS (Common Activation Codes)-->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    
+<script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+</script>
+<script>
+    var frm = $('#contactForm1');
+
+
+    frm.submit(function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (data) {
+                RenderCart(data);
+                alertify.success('Thêm vào giỏ hàng thành công!');
+            },
+            error: function (data) {
+                alertify.error('Thất bại');
+                console.log(data);
+            },
+        });
+    });
+    $("#cart-item").on("click", "#removeCart", function (e){
+        e.preventDefault();
+        var urlDeleteCart = $(this).data('url');
+        $.ajax({
+            url: urlDeleteCart,
+            type: 'GET',
+            success: function (data) {
+                RenderCart(data);
+                alertify.success('Xóa giỏ hàng thành công!');
+            },
+            error: function (data) {
+                alertify.error('Thất bại');
+                console.log(data);
+            },
+        });
+    });
+
+    function RenderCart(data) {
+        $("#cart-item").empty();
+        $("#cart-item").html(data);
+        $("#show-soluongCart").text($("#soluongCart").val());
+    }
+</script>
 </body>
 
 </html>
