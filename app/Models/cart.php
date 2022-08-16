@@ -22,17 +22,20 @@ class cart extends Model
 
     public function addCart($params, $id) {
         $product = $params;
-        $newProduct = ['quantity' => 0, 'price' => $product['price'], 'productInfo' => $params];
+        $newProduct = ['quantity' => 0, 'price' => 0, 'productInfo' => $product];
+        
         if($this->products){
             if(array_key_exists($id, $this->products)) {
                 $newProduct = $this->products[$id];
             }
         }
-        $newProduct['quantity']++;
-        $newProduct['price'] = $newProduct['quantity'] * $product['price'];
+
+        $newProduct['quantity'] += $product['quantity'];
+        $newProduct['price'] += $product['price'];
+        
         $this->products[$id] = $newProduct;
-        $this->totalPrice +=  $product['price'];
-        $this->totalQuantity++;
+        $this->totalQuantity += $product['quantity'];
+        $this->totalPrice += $product['price'];
     }
 
     public function deleteItemCart($id) {

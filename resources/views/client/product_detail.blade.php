@@ -108,7 +108,7 @@
                             <option disabled>Chọn màu</option>
                             @foreach($listColor as $color)
                             @if ($color->pro_id == $proDetail->id)
-                            <option @php if($loop->iteration == 1){ echo "selected";} @endphp  value="{{$color->id}}">{{$color->name}}</option>
+                            <option @php if($loop->iteration == 1){ echo "selected";} @endphp  value="{{$color->id}}">{{$color->name}} </option>
                             @else
                             @endif
                            
@@ -119,7 +119,7 @@
                             <option disabled>Chọn cấu hình</option>
                             @foreach($listConfig as $config)
                             @if ($config->pro_id == $proDetail->id)
-                            <option @php if($loop->iteration == 1){ echo "selected";} @endphp  value="{{$config->id}}">Cấu hình số: {{$loop->iteration}}</option>
+                            <option @php if($loop->iteration == 1){ echo "selected";} @endphp  value="{{$config->id}}">Cấu hình số: {{$loop->iteration}} </option>
                             @else
                             @endif
                            
@@ -130,6 +130,8 @@
                           <input type="hidden" name="id" value="{{$proDetail->id}}" >
                           <input type="hidden" name="name" value="{{$proDetail->name}}" >
                           <input type="hidden" name="image" value="{{$proDetail->image}}" >
+                          <input type="hidden" name="color_price" value="0" >
+                          <input type="hidden" name="config_price" value="0" >
     
                         <div class="pro-details-quality">
                             <div class="cart-plus-minus">
@@ -138,11 +140,10 @@
                             
                             @if ($proDetail->quantity == 0)
                             <div class="pro-details-cart">
-                                <a href="#" class="add-cart add_to_cart" >Add To Cart</a> *Hết hàng
+                                 *Hết hàng
                             </div>
                             @else
                             <div class="pro-details-cart">
-                                {{-- <a onclick="addCart({{$proDetail->id}})" href="javascript:" class="add-cart add_to_cart" >Add To Cart</a> --}}
                                 <button class="add-cart add_to_cart" type="submit">Add To Cart</button>
                             </div>
                             @endif

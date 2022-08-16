@@ -73,24 +73,44 @@ class HomeClientController extends Controller
         return view('client.product_detail', $this->v);
     }
 
-    public function addToCart(Request $request, $id) {
-        $product = DB::table('product')->where('id', $id)->first();
 
+    // nút giỏ hàng
+    public function addToCart(Request $request, $id) {
         $params = [];
         $params = $request->post();
-        unset($params['_token']);
-        // dd($params);
 
-        if($product != null) {
-            $oldCart = Session('cart') ? Session('cart') : null;
-            $newCart = new cart($oldCart);
-            $newCart->addCart($params, $id);
+        $product = DB::table('product')->where('id', $id)->first();
+        $config = DB::table('config')->where('pro_id', $id)->where('id', $params['config'])->first();
+        $color = DB::table('color')->where('pro_id', $id)->where('id', $params['color'])->first();
+        // dd($config);
 
-            $request->Session()->put('cart', $newCart);
+        if($params['color'] == $color->id) {
+            $params['color_price'] = $color->price_cl;
         }
-        // dd($newCart);
-      
-        return view('client.cart-item');
+        if($params['config'] == $config->id) {
+            $params['config_price'] = $config->price_cf;
+        }
+        $params['price'] = $params['price'] + $params['color_price'] + $params['config_price'];
+        $params['price'] = $params['price'] * $params['quantity'];
+        unset($params['_token']);
+
+        if($params['quantity'] >  $product->quantity) {
+            echo "Số lượng hàng nhập phải nhỏ hơn ".$product->quantity ."!";
+        }else{
+
+            if($product != null) {
+                $oldCart = Session('cart') ? Session('cart') : null;
+                $newCart = new cart($oldCart);
+                $newCart->addCart($params, $id);
+    
+                $request->Session()->put('cart', $newCart);
+            }
+            // dd($newCart);
+            
+          
+            return view('client.cart-item');
+        }
+
     }
 
     public function deleteItemCart(Request $request, $id) {
@@ -103,6 +123,25 @@ class HomeClientController extends Controller
             $request->Session()->forget('cart');
         }
         return view('client.cart-item');
+        
+    }
+
+    // trang giỏ hàng
+    public function viewCart() {
+
+        return view('client.view-cart');
+    }
+
+    public function deleteListItemCart(Request $request, $id) {
+        $oldCart = Session('cart') ? Session('cart') : null;
+        $newCart = new cart($oldCart);
+        $newCart->deleteItemCart($id);
+        if(count($newCart->products) > 0){
+            $request->Session()->put('cart', $newCart);
+        }else {
+            $request->Session()->forget('cart');
+        }
+        return view('client.view-cart-item');
         
     }
 }

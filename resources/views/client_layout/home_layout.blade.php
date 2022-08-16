@@ -184,6 +184,8 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                                 <div class="content">
                                     <a href="#" class="title">{{$item['productInfo']['name']}}</a>
                                     <span class="quantity-price">{{$item['quantity']}} x <span class="amount">{{number_format($item['price'])}} VNĐ</span></span>
+                                    <span>Giá cấu hình:  {{number_format($item['productInfo']['config_price'])}} VNĐ</span> <br>
+                                    <span>Giá màu:  {{number_format($item['productInfo']['color_price'])}} VNĐ</span>
                                     {{-- <a href="#" class="remove">×</a> --}}
                                     <span style="cursor: pointer;" id="removeCart" data-url="{{route('deleteToCart', ['id' => $item['productInfo']['id'] ])}}"  class="remove">×</span>
                                 </div>
@@ -199,7 +201,7 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                     </div>
                     <div class="foot">
                         <div class="buttons mt-30px">
-                            <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
+                            <a href="{{route('viewCart')}}" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
                             <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
                         </div>
                     </div>

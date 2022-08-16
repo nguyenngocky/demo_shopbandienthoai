@@ -104,6 +104,9 @@ Route::middleware(['auth'])->group(function (){
 Route::get('/', 'client\HomeClientController@home')->name('homePageClient');
 Route::get('/category/{id}', 'client\HomeClientController@proAsCategory')->name('homePageCate');
 Route::get('/product-detail/{id}', 'client\HomeClientController@proDetail')->name('proDetailPage');
-// giỏ hàng
+// nút giỏ hàng
 Route::post('/add-to-cart/{id}', 'client\HomeClientController@addToCart')->name('addToCart');
 Route::get('/delete-to-cart/{id}', 'client\HomeClientController@deleteItemCart')->name('deleteToCart');
+// trang giỏ hàng
+Route::get('/view-cart', 'client\HomeClientController@viewCart')->name('viewCart');
+Route::get('/delete-list-to-cart/{id}', 'client\HomeClientController@deleteListItemCart')->name('deleteViewToCart');
