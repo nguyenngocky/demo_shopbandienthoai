@@ -40,7 +40,7 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                                     <td class="product-subtotal">{{number_format($item['price'])}}</td>
                                     <td class="product-remove">
                                         <a href="{{route('proDetailPage', ['id' => $item['productInfo']['id']])}}"><i class="fa fa-pencil"></i></a>
-                                        <span style="cursor: pointer;" id="removeCart" onclick="DeleteListItemCart({{$item['productInfo']['id']}})"  class="remove">Xóa</span>
+                                        <span style="cursor: pointer;" id="removeCart" onclick="DeleteListItemCart({{$item['productInfo']['id']}})"  class="remove">×</span>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -63,9 +63,10 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                             </div>
                         </div>
                     </div>
-                </form>
+                
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb-lm-30px">
+                       
                     </div>
                     <div class="col-lg-4 col-md-6 mb-lm-30px">
                         <div class="discount-code-wrapper">
@@ -97,9 +98,9 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                             </div>
                             <h4 class="grand-totall-title">Tổng tiền <span>{{number_format(Session::get('cart')->totalPrice)}} VNĐ</span></h4>
                             @if(!isset($objUserClient))
-                            *Vui lòng đăng nhập để tiến thanh toán
+                            *Vui lòng đăng nhập để tiến hành thanh toán
                             @else
-                            <a href="#">Thanh toán</a>
+                            <a href="{{route('viewBill')}}">Thanh toán</a>
                             @endif
                         </div>
                     </div>
@@ -123,6 +124,7 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                     </div>
                     @endif
                 </div>
+            </form>
             </div>
         </div>
     </div>

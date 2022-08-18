@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    
     <div class="row">
         <div class="col-lg-4 col-md-6 mb-lm-30px">
            
@@ -87,9 +87,9 @@
                 </div>
                 <h4 class="grand-totall-title">Tổng tiền <span>{{number_format(Session::get('cart')->totalPrice)}} VNĐ</span></h4>
                 @if(!isset($objUserClient))
-                *Vui lòng đăng nhập để tiến thanh toán
+                *Vui lòng đăng nhập để tiến hành thanh toán
                 @else
-                <a href="#">Thanh toán</a>
+                <a href="{{route('viewBill')}}">Thanh toán</a>
                 @endif
             </div>
         </div>
@@ -113,4 +113,5 @@
         </div>
         @endif
     </div>
+</form>
 </div>

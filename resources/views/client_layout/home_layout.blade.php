@@ -202,7 +202,7 @@ $objUserClient = \Illuminate\Support\Facades\Auth::user();
                     <div class="foot">
                         <div class="buttons mt-30px">
                             <a href="{{route('viewCart')}}" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                            <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
+                            <a href="{{route('billDetail', ['id' => $objUserClient->id])}}" class="btn btn-outline-dark current-btn">Đơn hàng của tôi</a>
                         </div>
                     </div>
                 </div>

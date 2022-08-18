@@ -15,13 +15,16 @@ return new class extends Migration
     {
         Schema::create('bill_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('address');
-            $table->string('phone');
-            $table->string('name');
-            $table->string('pro_name');
-            $table->integer('quantily');
-            $table->integer('price');
+            $table->integer('id_pro');
+            $table->string('image_pro');
+            $table->string('name_pro');
+            $table->integer('price_pro');
+            $table->integer('quantily_pro');
+            $table->integer('total_price');
             $table->integer('bill_id');
+            $table->integer('id_user');
+            $table->integer('id_config');
+            $table->integer('id_color');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

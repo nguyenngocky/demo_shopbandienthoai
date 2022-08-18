@@ -64,6 +64,7 @@
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('user')}}">Người dùng</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('banner')}}">Banner</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="{{route('banner_bottom')}}">Banner 2</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="{{route('cart')}}">Đơn hàng</a></li>
 						</ul>
 					</li>
 

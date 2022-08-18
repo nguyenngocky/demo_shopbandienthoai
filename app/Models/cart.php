@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class cart extends Model
 {
@@ -43,4 +44,5 @@ class cart extends Model
         $this->totalPrice -= $this->products[$id]['price'];
         unset($this->products[$id]);
     }
+
 }

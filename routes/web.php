@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/ActiveStatusBannerB/{id}', 'BannerBottomController@ActiveStatusBannerB')->name('ActiveStatusBannerB');
     Route::get('/UnactiveStatusBannerB/{id}', 'BannerBottomController@UnactiveStatusBannerB')->name('UnactiveStatusBannerB');
 
+    // Quản trị đơn hàng
+    Route::get('/cart', 'CartController@getList')->name('cart');
+    Route::get('/giao-hang/{id}', 'CartController@giaoHang')->name('giaoHang');
+    Route::get('/cart/bill-detail/{id}', 'CartController@chiTietDon')->name('chiTietDon');
 });
 
 // client
@@ -110,3 +114,10 @@ Route::get('/delete-to-cart/{id}', 'client\HomeClientController@deleteItemCart')
 // trang giỏ hàng
 Route::get('/view-cart', 'client\HomeClientController@viewCart')->name('viewCart');
 Route::get('/delete-list-to-cart/{id}', 'client\HomeClientController@deleteListItemCart')->name('deleteViewToCart');
+// trang thanh toán giỏ hàng
+Route::get('/view-bill', 'client\HomeClientController@viewBill')->name('viewBill');
+Route::post('/view-bill', 'client\HomeClientController@saveBill')->name('saveBill');
+Route::get('/view-bill-detail/{id}', 'client\HomeClientController@billDetail')->name('billDetail');
+Route::get('/view-bill-detail/product/{id}', 'client\HomeClientController@billProDetail')->name('billProDetail');
+Route::get('/delete-bill-detail/{id}', 'client\HomeClientController@deleteBill')->name('deleteBill');
+Route::get('/nhan-hang/{id}', 'client\HomeClientController@nhanHang')->name('nhanHang');

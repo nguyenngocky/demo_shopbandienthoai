@@ -13,6 +13,7 @@ use App\Models\image;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Session;
 
 class HomeClientController extends Controller
@@ -144,4 +145,72 @@ class HomeClientController extends Controller
         return view('client.view-cart-item');
         
     }
+
+    // trang bill giỏ hàng
+    public function viewBill() {
+        return view('client.view-bill');
+    }
+
+    public function saveBill(Request $request) {
+        $params = [];
+        $params = $request->post();
+        unset($params['_token']);
+        $params['ngaylap'] = date("d/m/Y");
+        // dd($params);
+        $bill = DB::table('bill')->insertGetId($params);
+        // dd($bill);
+
+      
+        if(Session('cart') != null){
+            // dd(Session('cart')->products);
+            foreach(Session('cart')->products as $item){
+                
+                DB::table('bill_detail')->insert([
+                    'id_pro' => $item['productInfo']['id'],
+                    'image_pro' => $item['productInfo']['image'],
+                    'name_pro' => $item['productInfo']['name'],
+                    'price_pro' => $item['productInfo']['price'],
+                    'quantily_pro' => $item['productInfo']['quantity'],
+                    'total_price' => $item['price'],
+                    'bill_id' => $bill,
+                    'id_user' => $params['user_id'],
+                    'id_config' => $item['productInfo']['config'],
+                    'id_color' => $item['productInfo']['color'],
+                ]);
+                
+            }
+            
+        }
+
+        Session()->forget('cart');
+        return Redirect::to('/view-bill-detail'.'/'.$params['user_id']);
+
+
+    }
+
+    public function billDetail($id) {
+        $Listbill = DB::table('bill')->where('user_id', $id)->get();
+
+        return view('client.bill_detail', compact('Listbill'));
+    }
+
+    public function billProDetail($id) {
+        $ListProBill = DB::table('bill_detail')->where('bill_id', $id)->get();
+
+        return view('client.bill_pro_detail', compact('ListProBill'));
+    }
+
+    public function deleteBill($id) {
+        DB::table('bill_detail')->where('bill_id', $id)->delete();
+        DB::table('bill')->where('id', $id)->delete();
+
+        return back();
+    }
+
+    public function nhanHang($id) {
+        DB::table('bill')->where('id', $id)->update(['trangthai' =>  3]);
+        return back();
+    }
+
+
 }

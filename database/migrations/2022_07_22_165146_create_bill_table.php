@@ -15,10 +15,15 @@ return new class extends Migration
     {
         Schema::create('bill', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email');
             $table->string('address');
             $table->string('phone');
-            $table->string('name');
+            $table->integer('ship');
             $table->integer('user_id');
+            $table->string('ngaylap');
+            $table->integer('tongdonhang');
+            $table->integer('trangthai')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();
         });
